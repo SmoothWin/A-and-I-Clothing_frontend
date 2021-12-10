@@ -16,10 +16,12 @@ export default function bigorder(){
         data.append('file', selectedFile)
         try{
             let response = await axios.post("http://localhost:8000/bigorders/upload", data,{ 
-                // receive two    parameter endpoint url ,form data
+                
             })
-            console.log(response.data.message)
             setMessage(response.data.message)
+            document.getElementById("file_form").value = '';
+            setSelectedFile(null)
+
         }catch(e){
             console.log(e)
         }
@@ -47,7 +49,7 @@ export default function bigorder(){
         <div className="col-12 col-sm-8 col-md-10 col-lg-8 d-flex flex-column mx-auto justify-content-around">
             <a className="col-12 mt-3 btn btn-danger btn-lg" href="/bigorder_template.csv" download> Download Form</a>
             <div className="col-12 mt-3 form-group">
-                <input className="form-control" type="file" accept=".csv"
+                <input className="form-control" id="file_form" type="file" accept=".csv"
                 onChange={onChangeHandler}
                 />
             </div>
