@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "test": "jest --watch --verbose",
+    "test": "jest",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
