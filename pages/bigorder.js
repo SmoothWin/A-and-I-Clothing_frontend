@@ -4,7 +4,7 @@ import Head from "next/head";
 
 import BootstrapJS from '../components/Bootstrap'
 
-export default function bigorder(){
+export default function Bigorder(){
     const [selectedFile, setSelectedFile] = useState(null);
     const [message, setMessage] = useState(null)
 
@@ -20,7 +20,7 @@ export default function bigorder(){
             })
             setMessage(response.data.message)
             document.getElementById("file_form").value = '';
-            setSelectedFile(null)
+            setSelectedFile(nulld)
 
         }catch(e){
             console.log(e)
@@ -29,6 +29,7 @@ export default function bigorder(){
     return (
         <>
         <Head>
+            <title>{"Big Order - A&I Clothing"}</title>
             <BootstrapJS/>
         </Head>
         
