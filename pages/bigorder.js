@@ -3,6 +3,7 @@ import axios from 'axios';
 import Head from "next/head";
 
 import BootstrapJS from '../components/Bootstrap'
+import Navbar from "../components/Navbar";
 
 export default function Bigorder(){
     const [selectedFile, setSelectedFile] = useState(null);
@@ -32,7 +33,7 @@ export default function Bigorder(){
             <title>{"Big Order - A&I Clothing"}</title>
             <BootstrapJS/>
         </Head>
-        
+        <Navbar/>
         <h2 className="display-4 col-10 mx-5 text-center text-sm-start">Special orders for Businesses</h2>
         <div className="container-sm d-flex flex-column flex-md-row">
             <div className="col-12 col-md-6 mx-1">
