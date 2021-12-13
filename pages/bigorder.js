@@ -34,9 +34,14 @@ export default function Bigorder(){
             <BootstrapJS/>
         </Head>
         <Navbar/>
-        <h2 className="display-4 col-10 mx-5 text-center text-sm-start">Special orders for Businesses</h2>
-        <div className="container-sm d-flex flex-column flex-md-row">
+            <br/>
+            <br/>
+            <div className="container-sm">
+        <div className="d-flex flex-column flex-md-row">
             <div className="col-12 col-md-6 mx-1">
+                <h2 className="display-4 col-10 mx-6 text-sm-start">Business Orders</h2>
+                <br/>
+                <br/>
                 <p className="text-secondary pt-3 fs-5">Steps for orders:</p>
                 <p className="text-secondary pt-4 fs-5">1- Download the form and fill it out.</p>
                 <p className="text-secondary pt-4 fs-5">2- Upload the form below and click Send Order.</p>
@@ -46,7 +51,7 @@ export default function Bigorder(){
             </div>
                 <img className="img-thumbnail h-25 w-50 mt-auto mb-auto mx-auto" src="/image.png"/>
         </div>
-            
+            </div>
                     
         <div className="col-12 col-sm-8 col-md-10 col-lg-8 d-flex flex-column mx-auto justify-content-around">
             <a className="col-12 mt-3 btn btn-danger btn-lg" href="/bigorder_template.csv" download> Download Form</a>
