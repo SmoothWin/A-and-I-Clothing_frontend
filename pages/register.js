@@ -62,21 +62,25 @@ export default function register() {
     }
     function onSubmit(e){
         e.preventDefault()
-        axios.post("http://localhost:8000/register", {
-            "firstName": firstName,
-            "lastName": lastName,
-            "email": email,
-            "password": password,
-            "confirmpassword":confirmPassword,
-            "phoneCountryCode":getCountryCallingCode(country),
-            "phoneNumber":phoneNumber.replace("+" + getCountryCallingCode(country), ""),
-            "address":address,
-            "buildingNumber":civicNumber,
-            "city":city,
-            "country":country,
-            "postalCode":postalCode,
-            "organizationName": organisationName
-        }, {withCredentials:true})
+        try{
+            axios.post("http://localhost:8000/register", {
+                "firstName": firstName,
+                "lastName": lastName,
+                "email": email,
+                "password": password,
+                "confirmpassword":confirmPassword,
+                "phoneCountryCode":getCountryCallingCode(country),
+                "phoneNumber":phoneNumber.replace("+" + getCountryCallingCode(country), ""),
+                "address":address,
+                "buildingNumber":civicNumber,
+                "city":city,
+                "country":country,
+                "postalCode":postalCode,
+                "organizationName": organisationName
+            }, {withCredentials:true})
+        }catch(e){
+            
+        }
     }
     return (
         <>
