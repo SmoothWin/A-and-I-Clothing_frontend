@@ -1,13 +1,28 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import axios from 'axios';
 import Head from "next/head";
-
+import { useRouter } from 'next/router'
 import BootstrapJS from '../components/Bootstrap'
 import Navbar from "../components/Navbar";
 
 export default function Bigorder(){
+    const router = useRouter();
     const [selectedFile, setSelectedFile] = useState(null);
-    const [message, setMessage] = useState(null)
+    const [message, setMessage] = useState(null);
+    const [mounted, setMounted] = useState(false);
+    useEffect(()=>{
+        setMounted(true)
+    },[])
+    useEffect(async ()=>{
+        try{
+            if(mounted){
+                await axios.get("http://localhost:8000/bigorders", {withCredentials:true})
+            }
+        }
+        catch (e){
+            router.push('/login')
+        }
+    },[mounted])
 
     function onChangeHandler(e){
         setSelectedFile(e.target.files[0])

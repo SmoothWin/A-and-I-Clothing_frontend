@@ -21,8 +21,8 @@ export default function Navbar(){
                             </li>
                         </ul>
                         <form className="d-flex">
-                            <Link href="/store"><a className="nav-link">Register</a></Link>
-                            <Link href="/store"><a className="nav-link">Login</a></Link>
+                            <Link href="/register"><a className="nav-link">Register</a></Link>
+                            <Link href="/login"><a className="nav-link">Login</a></Link>
 
                         </form>
                     </div>
