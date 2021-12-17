@@ -8,18 +8,18 @@ import en from 'react-phone-number-input/locale/en.json';
 import 'react-phone-number-input/style.css';
 
 export default function register() {
-    const [email,setEmail]=useState()
-    const [password,setPassword]=useState()
-    const [confirmPassword,setConfirmPassword]=useState()
-    const [phoneNumber, setPhoneNumber] = useState();
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [country, setCountry] = useState();
-    const [civicNumber,setCivicNumber]=useState()
-    const [address, setAddress] = useState();
-    const [city, setCity] = useState();
-    const [postalCode, setPostalCode] = useState();
-    const [organisationName, setOrganisationName] = useState();
+    const [email,setEmail]=useState(null)
+    const [password,setPassword]=useState(null)
+    const [confirmPassword,setConfirmPassword]=useState(null)
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [firstName, setFirstName] = useState(null);
+    const [lastName, setLastName] = useState(null);
+    const [country, setCountry] = useState(null);
+    const [civicNumber,setCivicNumber]=useState(null)
+    const [address, setAddress] = useState(null);
+    const [city, setCity] = useState(null);
+    const [postalCode, setPostalCode] = useState(null);
+    const [organisationName, setOrganisationName] = useState(null);
     const CountrySelect = ({ value, onChange, labels, ...rest }) => (
         <select {...rest} value={value} onChange={(event) => onChange(event.target.value || undefined)}>
             <option value="">{labels.ZZ}</option>
@@ -69,7 +69,7 @@ export default function register() {
             "password": password,
             "confirmpassword":confirmPassword,
             "phoneCountryCode":getCountryCallingCode(country),
-            "phoneNumber":phoneNumber,
+            "phoneNumber":phoneNumber.replace("+" + getCountryCallingCode(country), ""),
             "address":address,
             "buildingNumber":civicNumber,
             "city":city,
@@ -124,12 +124,12 @@ export default function register() {
                             <Input country={country} value={phoneNumber} onChange={setPhoneNumber} placeholder="Enter phone number" name="phoneNumber" />
                     </div>
                     <div className="form-group">
-                        <label>Civic Number (Building Number)</label>
-                        <input type="text" className="form-control" placeholder="Civic number" onChange={handleCivicNumber}/>
-                    </div>
-                    <div className="form-group">
                         <label>Address</label>
                         <input type="text" className="form-control" placeholder="Address" onChange={handleAddress}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Apartment Number</label>
+                        <input type="text" className="form-control" placeholder="Civic number" onChange={handleCivicNumber}/>
                     </div>
                     <div className="form-group">
                         <label>City</label>
