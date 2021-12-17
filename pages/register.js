@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import Head from "next/head";
 import BootstrapJS from "../components/Bootstrap";
+import { useRouter } from "next/router";
 import {useState} from "react";
 import axios from "axios";
 import Input, { getCountries, getCountryCallingCode } from 'react-phone-number-input/input';
@@ -8,6 +9,7 @@ import en from 'react-phone-number-input/locale/en.json';
 import 'react-phone-number-input/style.css';
 
 export default function register() {
+    const router = useRouter()
     const [email,setEmail]=useState(null)
     const [password,setPassword]=useState(null)
     const [confirmPassword,setConfirmPassword]=useState(null)
@@ -60,10 +62,10 @@ export default function register() {
     function handleOrganisationName(e){
         setOrganisationName(e.target.value)
     }
-    function onSubmit(e){
+    async function onSubmit(e){
         e.preventDefault()
         try{
-            axios.post("http://localhost:8000/register", {
+            await axios.post("http://localhost:8000/register", {
                 "firstName": firstName,
                 "lastName": lastName,
                 "email": email,
@@ -78,8 +80,10 @@ export default function register() {
                 "postalCode":postalCode,
                 "organizationName": organisationName
             }, {withCredentials:true})
-        }catch(e){
             
+            router.push('/login')
+        }catch(e){
+            console.log(e)
         }
     }
     return (
