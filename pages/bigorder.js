@@ -1,12 +1,28 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import axios from 'axios';
 import Head from "next/head";
-
+import { useRouter } from 'next/router'
 import BootstrapJS from '../components/Bootstrap'
+import Navbar from "../components/Navbar";
 
 export default function Bigorder(){
+    const router = useRouter();
     const [selectedFile, setSelectedFile] = useState(null);
-    const [message, setMessage] = useState(null)
+    const [message, setMessage] = useState(null);
+    const [mounted, setMounted] = useState(false);
+    useEffect(()=>{
+        setMounted(true)
+    },[])
+    useEffect(async ()=>{
+        try{
+            if(mounted){
+                await axios.get("http://localhost:8000/bigorders", {withCredentials:true})
+            }
+        }
+        catch (e){
+            router.push('/login')
+        }
+    },[mounted])
 
     function onChangeHandler(e){
         setSelectedFile(e.target.files[0])
@@ -32,10 +48,15 @@ export default function Bigorder(){
             <title>{"Big Order - A&I Clothing"}</title>
             <BootstrapJS/>
         </Head>
-        
-        <h2 className="display-4 col-10 mx-5 text-center text-sm-start">Special orders for Businesses</h2>
-        <div className="container-sm d-flex flex-column flex-md-row">
+        <Navbar/>
+            <br/>
+            <br/>
+            <div className="container-sm">
+        <div className="d-flex flex-column flex-md-row">
             <div className="col-12 col-md-6 mx-1">
+                <h2 className="display-4 col-10 mx-6 text-sm-start">Business Orders</h2>
+                <br/>
+                <br/>
                 <p className="text-secondary pt-3 fs-5">Steps for orders:</p>
                 <p className="text-secondary pt-4 fs-5">1- Download the form and fill it out.</p>
                 <p className="text-secondary pt-4 fs-5">2- Upload the form below and click Send Order.</p>
@@ -45,7 +66,7 @@ export default function Bigorder(){
             </div>
                 <img className="img-thumbnail h-25 w-50 mt-auto mb-auto mx-auto" src="/image.png"/>
         </div>
-            
+            </div>
                     
         <div className="col-12 col-sm-8 col-md-10 col-lg-8 d-flex flex-column mx-auto justify-content-around">
             <a className="col-12 mt-3 btn btn-danger btn-lg" href="/bigorder_template.csv" download> Download Form</a>
