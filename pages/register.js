@@ -128,7 +128,7 @@ export default function register() {
             document.getElementById("passwordSpan").innerHTML="Please fill out the password";
         }
         else if(!input.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)){
-            document.getElementById("passwordSpan").innerHTML="Password needs to have at least 1 letter, 1 number and 1 special character";
+            document.getElementById("passwordSpan").innerHTML="Password needs to have at least 1 letter, 1 number, 1 special character and be at least 8 characters long";
         }
         else if(input.length < 8){
             document.getElementById("passwordSpan").innerHTML="Password must have at least 8 characters";
