@@ -49,17 +49,13 @@ export default function register() {
     }
     function handlePhoneNumber(e){
         let input = e;
-        if(setCountry == null){
+        if(setCountry === undefined){
             document.getElementById("countrySpan").innerHTML="Please select a country";
         }
-        else if(input === ""){
+        else if(input === null){
             document.getElementById("phoneNumberSpan").innerHTML="Please fill out the phone number";
         }
-        else if(!(input.match(/\d+/))){
-            document.getElementById("phoneNumberSpan").innerHTML="Enter only numbers";
-        }
-        else if(input.length < 10){
-            input.replace("+" + getCountryCallingCode(country), "");
+        else if(Math.ceil(Math.log10(input + 1)) < 10){
             document.getElementById("phoneNumberSpan").innerHTML="Phone number has to have 10 numbers";
         }
         else{
@@ -201,7 +197,7 @@ export default function register() {
     }
     function onSubmit(e){
         e.preventDefault()
-        if(firstName === null || lastName === null || email === null || password === null || confirmPassword === null || phoneNumber === "" || countryCode === null || country === null || address === null || city === null || postalCode === null){
+        if(firstName === null || lastName === null || email === null || password === null || confirmPassword === null || phoneNumber === "" || countryCode === null || countryCode === undefined || country === null || address === null || city === null || postalCode === null){
             document.getElementById("submitSpan").innerHTML="Please fill out the missing fields"
         }
         else {
@@ -212,7 +208,7 @@ export default function register() {
                 "email": email,
                 "password": password,
                 "confirmpassword":confirmPassword,
-                "phoneCountryCode":countryCode,
+                "phoneCountryCode":countryCode.replace("+" + getCountryCallingCode(country), ""),
                 "phoneNumber":phoneNumber,
                 "address":address,
                 "buildingNumber":civicNumber,
@@ -238,38 +234,38 @@ export default function register() {
                     <span className="alert-danger" id="submitSpan"></span>
 
                     <div className="form-group">
-                        <label>First name</label>
+                        <label>First name<b className="text-danger"> *</b></label>
                         <input type="text" className="form-control" placeholder="First name" onChange={handleFirstName}/>
                         <span className="alert-danger" id="firstNameSpan"></span>
                     </div>
 
                     <div className="form-group">
-                        <label>Last name</label><br/>
+                        <label>Last name<b className="text-danger"> *</b></label><br/>
                         <input type="text" className="form-control" placeholder="Last name" onChange={handleLastName}/>
                         <span className="alert-danger" id="lastNameSpan"></span>
                     </div>
 
                     <div className="form-group">
-                        <label>Email address</label>
+                        <label>Email address<b className="text-danger"> *</b></label>
                         <input type="email" className="form-control" placeholder="Enter email" onChange={handleEmail}/>
                         <span className="alert-danger" id="emailSpan"></span>
                     </div>
 
                     <div className="form-group">
-                        <label>Password</label>
+                        <label>Password<b className="text-danger"> *</b></label>
                         <input type="password" className="form-control" placeholder="Enter password" onChange={handlePassword}/>
                         <span className="alert-danger" id="passwordSpan"></span>
                     </div>
 
                     <div className="form-group">
-                        <label>Confirm Password</label>
+                        <label>Confirm Password<b className="text-danger"> *</b></label>
                         <input type="password" className="form-control" placeholder="Confirm password" onChange={handleConfirmPassword}/>
                         <span className="alert-danger" id="confirmPasswordSpan"></span>
                     </div>
 
                     <div className="form-group">
                         <div>
-                            <label htmlFor="phoneNumber">Phone Number</label>
+                            <label htmlFor="phoneNumber">Phone Number<b className="text-danger"> *</b></label>
                         </div>
                             <CountrySelect labels={en} value={country} onChange={handleCountry} name="countrySelect" />&nbsp;&nbsp;&nbsp;
                             <Input country={country} value={phoneNumber} onChange={handlePhoneNumber} placeholder="Enter phone number" name="phoneNumber" />
@@ -277,7 +273,7 @@ export default function register() {
                         <span className="alert-danger" id="countrySpan"></span>
                     </div>
                     <div className="form-group">
-                        <label>Address</label>
+                        <label>Address<b className="text-danger"> *</b></label>
                         <input type="text" className="form-control" placeholder="Address" onChange={handleAddress}/>
                         <span className="alert-danger" id="addressSpan"></span>
                     </div>
@@ -287,12 +283,12 @@ export default function register() {
                         <span className="alert-danger" id="civicSpan"></span>
                     </div>
                     <div className="form-group">
-                        <label>City</label>
+                        <label>City<b className="text-danger"> *</b></label>
                         <input type="text" className="form-control" placeholder="City" onChange={handleCity}/>
                         <span className="alert-danger" id="citySpan"></span>
                     </div>
                     <div className="form-group">
-                        <label>Postal Code</label>
+                        <label>Postal Code<b className="text-danger"> *</b></label>
                         <input type="text" className="form-control" placeholder="Postal code" onChange={handlePostalCode}/>
                         <span className="alert-danger" id="postalCodeSpan"></span>
                     </div>

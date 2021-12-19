@@ -41,7 +41,15 @@ export default function login() {
     }
     function onSubmit(e){
         e.preventDefault()
-        axios.post("http://localhost:8000/login", {email:email, password: password}, {withCredentials:true})
+        if(password === null){
+            document.getElementById("submitSpan").innerHTML="Please enter the password"
+        }
+        else if(email === null){
+            document.getElementById("submitSpan").innerHTML="Please enter the email"
+        }
+        else {
+            axios.post("http://localhost:8000/login", {email: email, password: password}, {withCredentials: true})
+        }
     }
     return (
         <>
@@ -55,6 +63,7 @@ export default function login() {
             <div className="container-sm">
             <form onSubmit={onSubmit}>
                 <h3>Sign In</h3>
+                <span className="alert-danger" id="submitSpan"></span>
 
                 <div className="form-group">
                     <label>Email address</label>
