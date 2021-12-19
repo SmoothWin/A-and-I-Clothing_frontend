@@ -55,7 +55,7 @@ export default function register() {
         else if(input === ""){
             document.getElementById("phoneNumberSpan").innerHTML="Please fill out the phone number";
         }
-        else if(!input.match(/\d+/)){
+        else if(!(input.match(/\d+/))){
             document.getElementById("phoneNumberSpan").innerHTML="Enter only numbers";
         }
         else if(input.length < 10){
