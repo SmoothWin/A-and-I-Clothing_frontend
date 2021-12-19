@@ -197,33 +197,32 @@ export default function register() {
             setOrganisationName(input)
         }
     }
-    async function onSubmit(e){
+    async function onSubmit(e) {
         e.preventDefault()
-      
-        try{
-        if(firstName === null || lastName === null || email === null || password === null || confirmPassword === null || phoneNumber === "" || countryCode === null || countryCode === undefined || country === null || address === null || city === null || postalCode === null){
-            document.getElementById("submitSpan").innerHTML="Please fill out the missing fields"
-        }
-        else {
-            document.getElementById("submitSpan").innerHTML=""
-            axios.post("http://localhost:8000/register", {
-                "firstName": firstName,
-                "lastName": lastName,
-                "email": email,
-                "password": password,
-                "confirmpassword":confirmPassword,
-                "phoneCountryCode":countryCode.replace("+" + getCountryCallingCode(country), ""),
-                "phoneNumber":phoneNumber,
-                "address":address,
-                "buildingNumber":civicNumber,
-                "city":city,
-                "country":country,
-                "postalCode":postalCode,
-                "organizationName": organisationName
-            }, {withCredentials:true})
-            
-            router.push('/login')
-        }catch(e){
+
+        try {
+            if (firstName === null || lastName === null || email === null || password === null || confirmPassword === null || phoneNumber === "" || countryCode === null || countryCode === undefined || country === null || address === null || city === null || postalCode === null) {
+                document.getElementById("submitSpan").innerHTML = "Please fill out the missing fields"
+            } else {
+                document.getElementById("submitSpan").innerHTML = ""
+                axios.post("http://localhost:8000/register", {
+                    "firstName": firstName,
+                    "lastName": lastName,
+                    "email": email,
+                    "password": password,
+                    "confirmpassword": confirmPassword,
+                    "phoneCountryCode": countryCode.replace("+" + getCountryCallingCode(country), ""),
+                    "phoneNumber": phoneNumber,
+                    "address": address,
+                    "buildingNumber": civicNumber,
+                    "city": city,
+                    "country": country,
+                    "postalCode": postalCode,
+                    "organizationName": organisationName
+                }, {withCredentials: true})
+                await router.push('/login')
+            }
+        } catch (e) {
             console.log(e)
         }
     }
