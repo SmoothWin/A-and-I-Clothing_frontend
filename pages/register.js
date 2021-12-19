@@ -101,58 +101,58 @@ export default function register() {
 
                     <div className="form-group">
                         <label>First name</label>
-                        <input type="text" className="form-control" placeholder="First name" onChange={handleFirstName}/>
+                        <input id="register_fName" type="text" className="form-control" placeholder="First name" onChange={handleFirstName}/>
                     </div>
 
                     <div className="form-group">
                         <label>Last name</label>
-                        <input type="text" className="form-control" placeholder="Last name" onChange={handleLastName}/>
+                        <input id="register_lName" type="text" className="form-control" placeholder="Last name" onChange={handleLastName}/>
                     </div>
 
                     <div className="form-group">
                         <label>Email address</label>
-                        <input type="email" className="form-control" placeholder="Enter email" onChange={handleEmail}/>
+                        <input id="register_email" type="email" className="form-control" placeholder="Enter email" onChange={handleEmail}/>
                     </div>
 
                     <div className="form-group">
                         <label>Password</label>
-                        <input type="password" className="form-control" placeholder="Enter password" onChange={handlePassword}/>
+                        <input id="register_password" type="password" className="form-control" placeholder="Enter password" onChange={handlePassword}/>
                     </div>
 
                     <div className="form-group">
                         <label>Confirm Password</label>
-                        <input type="password" className="form-control" placeholder="Confirm password" onChange={handleConfirmPassword}/>
+                        <input id="register_cpassword" type="password" className="form-control" placeholder="Confirm password" onChange={handleConfirmPassword}/>
                     </div>
 
                     <div className="form-group">
                         <div>
                             <label htmlFor="phoneNumber">Phone Number</label>
                         </div>
-                            <CountrySelect labels={en} value={country} onChange={setCountry} name="countrySelect" />&nbsp;&nbsp;&nbsp;
-                            <Input country={country} value={phoneNumber} onChange={setPhoneNumber} placeholder="Enter phone number" name="phoneNumber" />
+                            <CountrySelect id="register_country" labels={en} value={country} onChange={setCountry} name="countrySelect" />&nbsp;&nbsp;&nbsp;
+                            <Input id="register_phone" country={country} value={phoneNumber} onChange={setPhoneNumber} placeholder="Enter phone number" name="phoneNumber" />
                     </div>
                     <div className="form-group">
                         <label>Address</label>
-                        <input type="text" className="form-control" placeholder="Address" onChange={handleAddress}/>
+                        <input id="register_address" type="text" className="form-control" placeholder="Address" onChange={handleAddress}/>
                     </div>
                     <div className="form-group">
                         <label>Apartment Number</label>
-                        <input type="text" className="form-control" placeholder="Civic number" onChange={handleCivicNumber}/>
+                        <input id="register_apartNum" type="text" className="form-control" placeholder="Civic number" onChange={handleCivicNumber}/>
                     </div>
                     <div className="form-group">
                         <label>City</label>
-                        <input type="text" className="form-control" placeholder="City" onChange={handleCity}/>
+                        <input id="register_city" type="text" className="form-control" placeholder="City" onChange={handleCity}/>
                     </div>
                     <div className="form-group">
                         <label>Postal Code</label>
-                        <input type="text" className="form-control" placeholder="Postal code" onChange={handlePostalCode}/>
+                        <input id="register_postal" type="text" className="form-control" placeholder="Postal code" onChange={handlePostalCode}/>
                     </div>
                     <div className="form-group">
                         <label>Organisation Name</label>
-                        <input type="text" className="form-control" placeholder="Organisation name" onChange={handleOrganisationName}/>
+                        <input id="register_org" type="text" className="form-control" placeholder="Organisation name" onChange={handleOrganisationName}/>
                     </div>
                     <br/>
-                    <button type="submit" className="btn btn-primary btn-block">Submit</button>
+                    <button id="register_btn" type="submit" className="btn btn-primary btn-block">Submit</button>
                 </form>
             </div>
         </>

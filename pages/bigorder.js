@@ -32,7 +32,7 @@ export default function Bigorder(){
         data.append('file', selectedFile)
         try{
             let response = await axios.post("http://localhost:8000/bigorders/upload", data,{ 
-                
+                withCredentials:true
             })
             setMessage(response.data.message)
             document.getElementById("file_form").value = '';

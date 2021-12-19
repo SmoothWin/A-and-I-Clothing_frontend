@@ -3,8 +3,10 @@ import Head from "next/head";
 import BootstrapJS from "../components/Bootstrap";
 import {useState} from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function login() {
+    const router = useRouter();
     const [email,setEmail]=useState(null)
     const [password,setPassword]=useState(null)
     function handleEmail(e){
@@ -13,9 +15,14 @@ export default function login() {
     function handlePassword(e){
         setPassword(e.target.value)
     }
-    function onSubmit(e){
+    async function onSubmit(e){
         e.preventDefault()
-        axios.post("http://localhost:8000/login", {email:email, password: password}, {withCredentials:true})
+        try{
+            await axios.post("http://localhost:8000/login", {email:email, password: password}, {withCredentials:true})
+            router.push('/')
+        }catch(e){
+
+        }
     }
     return (
         <>
