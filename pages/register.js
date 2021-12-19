@@ -40,7 +40,7 @@ export default function register() {
             document.getElementById("emailSpan").innerHTML="Enter email in the correct form";
         }
         else if(input.length < 5){
-            document.getElementById("emailSpan").innerHTML="email has to have more than 4 letters";
+            document.getElementById("emailSpan").innerHTML="Email has to have more than 4 letters";
         }
         else{
             document.getElementById("emailSpan").innerHTML="";
