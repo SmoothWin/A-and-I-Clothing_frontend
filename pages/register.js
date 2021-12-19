@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import Head from "next/head";
 import BootstrapJS from "../components/Bootstrap";
+import { useRouter } from "next/router";
 import {useState} from "react";
 import axios from "axios";
 import Input, { getCountries, getCountryCallingCode } from 'react-phone-number-input/input';
@@ -8,6 +9,7 @@ import en from 'react-phone-number-input/locale/en.json';
 import 'react-phone-number-input/style.css';
 
 export default function register() {
+    const router = useRouter()
     const [email,setEmail]=useState(null)
     const [password,setPassword]=useState(null)
     const [confirmPassword,setConfirmPassword]=useState(null)
@@ -195,8 +197,10 @@ export default function register() {
             setOrganisationName(input)
         }
     }
-    function onSubmit(e){
+    async function onSubmit(e){
         e.preventDefault()
+      
+        try{
         if(firstName === null || lastName === null || email === null || password === null || confirmPassword === null || phoneNumber === "" || countryCode === null || countryCode === undefined || country === null || address === null || city === null || postalCode === null){
             document.getElementById("submitSpan").innerHTML="Please fill out the missing fields"
         }
@@ -217,6 +221,10 @@ export default function register() {
                 "postalCode":postalCode,
                 "organizationName": organisationName
             }, {withCredentials:true})
+            
+            router.push('/login')
+        }catch(e){
+            console.log(e)
         }
     }
     return (
