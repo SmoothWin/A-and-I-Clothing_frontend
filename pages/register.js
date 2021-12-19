@@ -8,7 +8,7 @@ import Input, { getCountries, getCountryCallingCode } from 'react-phone-number-i
 import en from 'react-phone-number-input/locale/en.json';
 import 'react-phone-number-input/style.css';
 
-export default function register() {
+export default function Register() {
     const router = useRouter()
     const [email,setEmail]=useState(null)
     const [password,setPassword]=useState(null)
