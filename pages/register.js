@@ -38,11 +38,11 @@ export default function register() {
         if(input === ""){
             document.getElementById("emailSpan").innerHTML="Please fill out the email";
         }
-        else if(!input.match(/(?:[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)){
-            document.getElementById("emailSpan").innerHTML="Enter email in the correct form";
-        }
         else if(input.length < 5){
             document.getElementById("emailSpan").innerHTML="Email has to have more than 4 letters";
+        }
+        else if(!input.match(/(?:[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)){
+            document.getElementById("emailSpan").innerHTML="Enter email in the correct form";
         }
         else{
             document.getElementById("emailSpan").innerHTML="";
@@ -67,7 +67,6 @@ export default function register() {
     }
     function handleCountry(e){
         let input = e;
-        console.log(input)
         if(input === null){
             document.getElementById("countrySpan").innerHTML="Please select a country";
         }
@@ -98,7 +97,7 @@ export default function register() {
         else if(!input.match(/^[A-Za-z]+$/)){
             document.getElementById("firstNameSpan").innerHTML="Enter only letters";
         }
-        else if(input.length < 3){
+        else if(input.length < 2){
             document.getElementById("firstNameSpan").innerHTML="First name has to have more than 2 letters";
         }
         else{
@@ -114,7 +113,7 @@ export default function register() {
         else if(!input.match(/^[A-Za-z]+$/)){
             document.getElementById("lastNameSpan").innerHTML="Enter only letters";
         }
-        else if(input.length < 3){
+        else if(input.length < 2){
             document.getElementById("lastNameSpan").innerHTML="Last name has to have more than 2 letters";
         }
         else{
@@ -129,9 +128,6 @@ export default function register() {
         }
         else if(!input.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)){
             document.getElementById("passwordSpan").innerHTML="Password needs to have at least 1 letter, 1 number, 1 special character and be at least 8 characters long";
-        }
-        else if(input.length < 8){
-            document.getElementById("passwordSpan").innerHTML="Password must have at least 8 characters";
         }
         else{
             document.getElementById("passwordSpan").innerHTML="";
@@ -179,7 +175,7 @@ export default function register() {
         if(input === ""){
             document.getElementById("postalCodeSpan").innerHTML="Please fill out the postal code";
         }
-        else if(input.length < 6){
+        else if(input.length < 5){
             document.getElementById("postalCodeSpan").innerHTML="Postal Code must have at least 5 characters";
         }
         else{
@@ -205,14 +201,14 @@ export default function register() {
                 document.getElementById("submitSpan").innerHTML = "Please fill out the missing fields"
             } else {
                 document.getElementById("submitSpan").innerHTML = ""
-                axios.post("http://localhost:8000/register", {
+                await axios.post("http://localhost:8000/register", {
                     "firstName": firstName,
                     "lastName": lastName,
                     "email": email,
                     "password": password,
                     "confirmpassword": confirmPassword,
-                    "phoneCountryCode": countryCode.replace("+" + getCountryCallingCode(country), ""),
-                    "phoneNumber": phoneNumber,
+                    "phoneCountryCode": countryCode,
+                    "phoneNumber": phoneNumber.replace("+" + getCountryCallingCode(country), ""),
                     "address": address,
                     "buildingNumber": civicNumber,
                     "city": city,

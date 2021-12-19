@@ -42,8 +42,9 @@ export default function login() {
         }
     }
     async function onSubmit(e){
-        e.preventDefault()
+        
         try{
+        e.preventDefault()
             if(password === null){
                 document.getElementById("submitSpan").innerHTML="Please enter the password"
             }
@@ -51,7 +52,8 @@ export default function login() {
                 document.getElementById("submitSpan").innerHTML="Please enter the email"
             }
             else {
-                axios.post("http://localhost:8000/login", {email: email, password: password}, {withCredentials: true})
+                await axios.post("http://localhost:8000/login", {email: email, password: password}, {withCredentials: true})
+                router.push("/")
             }
         }catch(e){
             document.getElementById("submitSpan").innerHTML="Something went wrong with the login process"
