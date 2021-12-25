@@ -13,15 +13,19 @@ export default function Bigorder(){
     useEffect(()=>{
         setMounted(true)
     },[])
-    useEffect(async ()=>{
-        try{
-            if(mounted){
-                await axios.get("http://localhost:8000/bigorders", {withCredentials:true})
+    useEffect(()=>{
+        async function checkBigOrder(){
+            try{
+                if(mounted){
+                    await axios.get("http://localhost:8000/bigorders", {withCredentials:true})
+                }
+            }
+            catch (e){
+                router.push('/login')
             }
         }
-        catch (e){
-            router.push('/login')
-        }
+        checkBigOrder()
+
     },[mounted])
 
     function onChangeHandler(e){

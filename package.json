@@ -6,6 +6,7 @@
     "test": "jest",
     "build": "next build",
     "start": "next start",
+    "buildstart":"next build && next start",
     "lint": "next lint"
   },
   "dependencies": {

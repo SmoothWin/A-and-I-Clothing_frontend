@@ -1,6 +1,59 @@
+import axios from 'axios'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function Navbar(){
+    const [isMounted, setIsMounted] = useState(false)
+    const [username, setUsername] = useState(null)
+
+    useEffect(()=>{
+        setIsMounted(true)
+    })
+
+    useEffect(()=>{
+        async function check(){
+            if(isMounted){
+                //set an axios check if user is logged in on validation endpoint //for user experience
+                try{
+                    let response = await axios.post("http://localhost:8000/check",null, {withCredentials:true})
+                    if(response.data){
+                        localStorage.username = response.data.firstName+" "+response.data.lastName.charAt(0)+"."
+                        setUsername(response.data.firstName+" "+response.data.lastName.charAt(0)+".")
+                    }
+                    
+                }catch(e){
+    
+                }
+            }
+        }
+        check();
+        
+    },[isMounted])
+
+    async function handleLogout(){
+        try{
+            localStorage.removeItem("username")
+            setUsername(null)
+            await axios.post("http://localhost:8000/logout",null,{withCredentials: true})
+        }catch(e){
+
+        }
+    }
+
+    let right = 
+    <div className="d-flex">
+        <Link href="/register"><a className="nav-link">Register</a></Link>
+        <Link href="/login"><a className="nav-link">Login</a></Link>
+    </div>
+    if(username){
+        right = 
+        <div className="d-flex align-items-center">
+            <span className='nav-item'>{username}</span>
+            <a className='nav-link' role="button" onClick={handleLogout}>Logout</a>
+        </div>
+        
+    }
+
     return(
             <nav className="navbar navbar-expand-sm navbar-light bg-light">
                 <div className="container-fluid">
@@ -20,11 +73,7 @@ export default function Navbar(){
                                 <Link href="/store"><a className="nav-link">Store</a></Link>
                             </li>
                         </ul>
-                        <form className="d-flex">
-                            <Link href="/register"><a className="nav-link">Register</a></Link>
-                            <Link href="/login"><a className="nav-link">Login</a></Link>
-
-                        </form>
+                        {right}
                     </div>
                 </div>
             </nav>
