@@ -13,20 +13,20 @@ export default function Bigorder(){
     useEffect(()=>{
         setMounted(true)
     },[])
-    useEffect(()=>{
-        async function checkBigOrder(){
-            try{
-                if(mounted){
-                    await axios.get("http://localhost:8000/bigorders", {withCredentials:true})
-                }
-            }
-            catch (e){
-                router.push('/login')
-            }
-        }
-        checkBigOrder()
+    // useEffect(()=>{
+    //     async function checkBigOrder(){
+    //         try{
+    //             if(mounted){
+    //                 await axios.get("http://localhost:8000/bigorders", {withCredentials:true})
+    //             }
+    //         }
+    //         catch (e){
+    //             router.push('/login')
+    //         }
+    //     }
+    //     checkBigOrder()
 
-    },[mounted])
+    // },[mounted])
 
     function onChangeHandler(e){
         setSelectedFile(e.target.files[0])

@@ -1,10 +1,16 @@
 import axios from 'axios'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+//custom imports
+import Spinner from "../components/Spinner"
+
 export default function Navbar(){
+    const router = useRouter()
     const [isMounted, setIsMounted] = useState(false)
     const [username, setUsername] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(()=>{
         setIsMounted(true)
@@ -12,21 +18,33 @@ export default function Navbar(){
 
     useEffect(()=>{
         
-        async function check(){
+        async function check(){//this is where we handle redirections
             if(isMounted){
+                setTimeout(async ()=>{
+            
                 //set an axios check if user is logged in on validation endpoint //for user experience
                 try{
                     if(localStorage.username)
                     setUsername(localStorage.username)
                     let response = await axios.post("http://localhost:8000/check",null, {withCredentials:true})
+                    
                     if(response.data){
+                        if(router.pathname == "/login" || router.pathname == "/register"){
+                            router.push("/")
+                        }
                         localStorage.username = response.data.firstName+" "+response.data.lastName.charAt(0)+"."
                         setUsername(response.data.firstName+" "+response.data.lastName.charAt(0)+".")
                     }
                     
+                    setLoading(false)
+                    
                 }catch(e){
-    
+                    if(router.pathname == "/bigorder"){
+                        router.push("/login")
+                    }
+                    setLoading(false)
                 }
+            },700)
             }
         }
         check();
@@ -44,7 +62,10 @@ export default function Navbar(){
     }
 
     let right = null
-    
+    let loader = <Spinner/>
+    if(loading == false){
+        loader = null
+    }
     if(username){
         right = 
         <div className="d-flex align-items-center">
@@ -60,7 +81,10 @@ export default function Navbar(){
         </div>
     }
 
+    
     return(
+        <>
+            {loader}
             <nav className="navbar navbar-expand-sm navbar-light bg-light">
                 <div className="container-fluid">
                     <a className="navbar-brand" style={{color:"black", fontWeight:"bold", fontFamily:"\"Times New Roman\", Times, serif", textDecorationLine:"underline", textDecorationColor:"red"}}>A & I Clothing</a>
@@ -83,5 +107,6 @@ export default function Navbar(){
                     </div>
                 </div>
             </nav>
+        </>
     )
 }
