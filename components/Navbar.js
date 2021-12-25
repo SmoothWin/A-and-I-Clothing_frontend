@@ -11,10 +11,13 @@ export default function Navbar(){
     })
 
     useEffect(()=>{
+        
         async function check(){
             if(isMounted){
                 //set an axios check if user is logged in on validation endpoint //for user experience
                 try{
+                    if(localStorage.username)
+                    setUsername(localStorage.username)
                     let response = await axios.post("http://localhost:8000/check",null, {withCredentials:true})
                     if(response.data){
                         localStorage.username = response.data.firstName+" "+response.data.lastName.charAt(0)+"."
@@ -40,11 +43,8 @@ export default function Navbar(){
         }
     }
 
-    let right = 
-    <div className="d-flex">
-        <Link href="/register"><a className="nav-link">Register</a></Link>
-        <Link href="/login"><a className="nav-link">Login</a></Link>
-    </div>
+    let right = null
+    
     if(username){
         right = 
         <div className="d-flex align-items-center">
@@ -52,6 +52,12 @@ export default function Navbar(){
             <a className='nav-link' role="button" onClick={handleLogout}>Logout</a>
         </div>
         
+    }else{
+        right= 
+        <div className="d-flex">
+            <Link href="/register"><a className="nav-link">Register</a></Link>
+            <Link href="/login"><a className="nav-link">Login</a></Link>
+        </div>
     }
 
     return(
