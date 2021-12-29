@@ -7,6 +7,7 @@ import axios from "axios";
 import Input, { getCountries, getCountryCallingCode } from 'react-phone-number-input/input';
 import en from 'react-phone-number-input/locale/en.json';
 import 'react-phone-number-input/style.css';
+import styles from "../styles/Home.module.css";
 
 export default function Register() {
     const router = useRouter()
@@ -223,7 +224,7 @@ export default function Register() {
         }
     }
     return (
-        <>
+        <div className={styles.container}>
             <Head>
                 <title>{"Login - A&I Clothing"}</title>
                 <BootstrapJS/>
@@ -304,5 +305,5 @@ export default function Register() {
                     <button id="register_btn" type="submit" className="btn btn-primary btn-block">Submit</button>
                 </form>
             </div>
-        </>
+        </div>
     ); }

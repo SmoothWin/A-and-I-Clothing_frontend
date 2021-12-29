@@ -4,6 +4,7 @@ import Head from "next/head";
 import { useRouter } from 'next/router'
 import BootstrapJS from '../components/Bootstrap'
 import Navbar from "../components/Navbar";
+import styles from "../styles/Home.module.css";
 
 export default function Bigorder(){
     const router = useRouter();
@@ -47,7 +48,7 @@ export default function Bigorder(){
         }
     }
     return (
-        <>
+        <div className={styles.container}>
         <Head>
             <title>{"Big Order - A&I Clothing"}</title>
             <BootstrapJS/>
@@ -70,9 +71,8 @@ export default function Bigorder(){
             </div>
                 <img className="img-thumbnail h-25 w-50 mt-auto mb-auto mx-auto" src="/image.png"/>
         </div>
-            </div>
                     
-        <div className="col-12 col-sm-8 col-md-10 col-lg-8 d-flex flex-column mx-auto justify-content-around">
+        <div className="d-flex flex-column">
             <a className="col-12 mt-3 btn btn-danger btn-lg" href="/bigorder_template.csv" download> Download Form</a>
             <div className="col-12 mt-3 form-group">
                 <input className="form-control" id="file_form" type="file" accept=".csv"
@@ -83,7 +83,8 @@ export default function Bigorder(){
         </div>
 
         <div className="mx-auto mt-3 text-center text-success">{message}</div>
+            </div>
             
-        </>
+        </div>
     )
 }
