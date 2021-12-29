@@ -3,6 +3,7 @@ import Head from "next/head";
 import BootstrapJS from "../components/Bootstrap";
 import {useState} from "react";
 import axios from "axios";
+import styles from "../styles/Home.module.css";
 
 export default function login() {
     const [email,setEmail]=useState(null)
@@ -52,7 +53,7 @@ export default function login() {
         }
     }
     return (
-        <>
+        <div className={styles.container}>
             <Head>
             <title>{"Login - A&I Clothing"}</title>
             <BootstrapJS/>
@@ -90,5 +91,5 @@ export default function login() {
                 </p>
             </form>
                 </div>
-        </>
+        </div>
     ); }
