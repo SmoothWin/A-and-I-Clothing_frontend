@@ -4,7 +4,9 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 //custom imports
+import BootstrapJS from './Bootstrap'
 import Spinner from "../components/Spinner"
+import Head from 'next/head'
 
 export default function Navbar(){
     const router = useRouter()
@@ -84,6 +86,9 @@ export default function Navbar(){
     
     return(
         <>
+        <Head>
+            <BootstrapJS/>
+        </Head>
             {loader}
             <nav className="navbar navbar-expand-sm navbar-light bg-light">
                 <div className="container-fluid">

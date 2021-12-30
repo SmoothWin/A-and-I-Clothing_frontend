@@ -5,7 +5,7 @@ export default function Spinner(){
         <span className="sr-only"></span>
         </div>
         <div className="spinner-grow text-warning mx-2" style={{width:  70, height: 70}} role="status">
-        <span clasName="sr-only"></span>
+        <span className="sr-only"></span>
         </div>
         <div className="spinner-grow text-danger mx-2" style={{width:  70, height: 70}} role="status">
         <span className="sr-only"></span>
