@@ -64,7 +64,7 @@ export default function Product(){
     if(exists == false)
         display = 
         <div>
-            The product doesn't exist
+            The product doesn&apos;t exist
         </div>
 
     return(
