@@ -54,7 +54,7 @@ export default function Product(){
         display = 
         <div key={item?.id}>
             <h2>{item?.name}</h2> 
-            <img width={600} src={item?.images[0]}/>
+            {(item.images[0])?<img width={600} src={item?.images[0]}/>:null}
             <div>{item?.description}</div>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
         </div>
