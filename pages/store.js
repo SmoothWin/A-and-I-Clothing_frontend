@@ -11,6 +11,7 @@ export default function Store(){
     const [isMounted, setIsMounted] = useState(false)
     const [data, setData] = useState([])
     const [hasNext, setHasNext] = useState(true)
+    const [observer, setObserver] = useState(null)
 
     async function getData(url, append = false){
         try{
@@ -48,7 +49,7 @@ export default function Store(){
             getData(productUrl)
     },[isMounted])
 
-    async function addIntersectionObserver(){
+    function addIntersectionObserver(){
         const element = document.getElementById(data[data.length - 1].id)
         let observer = new IntersectionObserver(onIntersection, {
             root: null,   // default is the viewport
@@ -62,7 +63,6 @@ export default function Store(){
               if(entry.isIntersecting){
                     observer.unobserve(element)
                     getData(`${productUrl}/?starting_after=${data[data.length - 1].id}`, true)
-                    console.log("try")
                     
                 }
             }
@@ -71,11 +71,17 @@ export default function Store(){
           
           // Use the bserver to observe an element
           observer.observe(element)
+          return observer
     }
 
     useEffect(()=>{
+        if(hasNext == false)
+           observer?.unobserve(document.getElementById(data[data.length - 1].id))
+    },[observer])
+
+    useEffect(()=>{
         if(data.length > 0 && hasNext)
-            addIntersectionObserver()
+            setObserver(addIntersectionObserver())
     },[data])
 
 
