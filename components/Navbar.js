@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -6,13 +7,14 @@ import { useEffect, useState } from 'react'
 //custom imports
 import BootstrapJS from './Bootstrap'
 import Spinner from "../components/Spinner"
-import Head from 'next/head'
+import ShoppingCart from './ShoppingCart'
 
 export default function Navbar(){
     const router = useRouter()
     const [isMounted, setIsMounted] = useState(false)
     const [username, setUsername] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [cartToggle, setCartToggle] = useState(false)
 
     useEffect(()=>{
         setIsMounted(true)
@@ -63,6 +65,16 @@ export default function Navbar(){
         }
     }
 
+    function handleShoppingCart(){
+        // console.log(cartToggle)
+        if(cartToggle){
+            setCartToggle(false)
+            return
+        }
+        setCartToggle(true)
+        
+    }
+
     let right = null
     let loader = <Spinner/>
     if(loading == false){
@@ -90,7 +102,7 @@ export default function Navbar(){
             <BootstrapJS/>
         </Head>
             {loader}
-            <nav className="navbar navbar-expand-sm navbar-light bg-light">
+            <nav id="navbar" className="navbar navbar-expand-sm navbar-light bg-light" style={{zIndex:"100000"}}>
                 <div className="container-fluid">
                     <a className="navbar-brand" style={{color:"black", fontWeight:"bold", fontFamily:"\"Times New Roman\", Times, serif", textDecorationLine:"underline", textDecorationColor:"red"}}>A & I Clothing</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
@@ -108,10 +120,17 @@ export default function Navbar(){
                                 <Link href="/store"><a className="nav-link">Store</a></Link>
                             </li>
                         </ul>
+                        
+                        
                         {right}
                     </div>
+                    
                 </div>
+            <div className='d-flex' style={{marginLeft:"auto"}}>
+                <button onClick={handleShoppingCart} style={{marginRight:"20px"}}>&#128722;</button>
+            </div>
             </nav>
+            <ShoppingCart toggleCart={handleShoppingCart} isOn={cartToggle}/>
         </>
     )
 }

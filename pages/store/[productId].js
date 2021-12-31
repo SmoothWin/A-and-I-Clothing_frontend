@@ -41,7 +41,7 @@ export default function Product(){
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)
             list.items.push(product)
-            localStorage.cart = JSON.stringify(list)
+            localStorage.setItem("cart", JSON.stringify(list))
         }catch(e){
             console.log(e)
         }
