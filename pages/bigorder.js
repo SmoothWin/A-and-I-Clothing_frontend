@@ -40,7 +40,7 @@ export default function Bigorder(){
             })
             setMessage(response.data.message)
             document.getElementById("file_form").value = '';
-            setSelectedFile(nulld)
+            setSelectedFile(null)
 
         }catch(e){
             console.log(e)
