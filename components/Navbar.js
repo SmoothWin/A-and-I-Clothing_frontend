@@ -46,6 +46,10 @@ export default function Navbar(){
                     if(router.pathname == "/bigorder"){
                         router.push("/login")
                     }
+                    if(localStorage.username){
+                        localStorage.removeItem("username")
+                        setUsername(null)
+                    }
                     setLoading(false)
                 }
             },700)

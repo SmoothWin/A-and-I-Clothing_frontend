@@ -69,7 +69,7 @@ export default function ShoppingCart(props){
                 {items?.map((x, i)=><div className="d-flex flex-row justify-content-center" key={i}>
                 <div className="d-flex align-items-center justify-content-center" style={{width:"200px", height: "100px"}}>
                     {/* <img src={x.images[0]} style={{width:"90%", height:"100%"}}/>  */}
-                    <Image loader={contentfulLoader} src={x.images[0]} height={80} width={120}/>
+                    <Image placeholder="blur" blurDataURL="data:image/webp;base64,UklGRqoCAABXRUJQVlA4WAoAAAAgAAAAuAAAuAAASUNDUBgCAAAAAAIYAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAAAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3BhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADTLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANlZQOCBsAAAA8AoAnQEquQC5AD7tdrhWqaclI6BIATAdiWlu4XaxG0AT2vRVwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdAAAP7/dCkAAAAAAAAA" loader={contentfulLoader} src={x.images[0]} height={80} width={120}/>
                     {/* try Image from next/Images */}
                 </div>
                 <div className="d-flex flex-column align-items-center justify-content-around">
