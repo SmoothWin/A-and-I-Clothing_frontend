@@ -40,7 +40,21 @@ export default function Product(){
             if(!localStorage.cart)
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)
-            list.items.push(product)
+            
+            if(list.items.some(item=>item.id == product.id)){
+                list.items.forEach(item => {
+                    if(item.id == product.id){
+                        item.quantity += 1
+                    }
+                });
+            } else{
+                list.items.push(product)
+                list.items.forEach(item => {
+                    if(item.id == product.id){
+                        item.quantity = 1
+                    }
+                });
+            }
             localStorage.setItem("cart", JSON.stringify(list))
         }catch(e){
             console.log(e)

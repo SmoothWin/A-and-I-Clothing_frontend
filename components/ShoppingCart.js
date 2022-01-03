@@ -55,12 +55,45 @@ export default function ShoppingCart(props){
         }
     }
 
+    function handleDecrementQuantity(product){
+        try{
+            const cart = JSON.parse(localStorage?.cart)
+            cart.items.forEach(item=>{
+                if(item.id == product.id){
+                    if(item.quantity < 2) return
+                    item.quantity = item.quantity - 1
+                    
+                    localStorage.setItem("cart", JSON.stringify(cart))
+                }
+            })
+
+        }catch(e){
+
+        }
+    }
+    function handleIncrementQuantity(product){
+        try{
+            const cart = JSON.parse(localStorage?.cart)
+            cart.items.forEach(item=>{
+                if(item.id == product.id){
+                    item.quantity = item.quantity + 1
+                    
+                    localStorage.setItem("cart", JSON.stringify(cart))
+                }
+            })
+
+        }catch(e){
+
+        }
+    }
+
+
     let display = null
     let cartItems = null
     if(loading){
         cartItems = "Loading..."
     }
-    else if(items.length < 1){
+    else if(typeof items === "undefined"||items?.length < 1){
         cartItems = "Your shopping cart is empty"
     }
     else{
@@ -74,6 +107,7 @@ export default function ShoppingCart(props){
                 </div>
                 <div className="d-flex flex-column align-items-center justify-content-around">
                     <span>{x.name}</span>
+                    <div><button onClick={()=>handleDecrementQuantity(x)}>{"<"}</button>{x.quantity}<button onClick={()=>handleIncrementQuantity(x)}>{">"}</button></div>
                     <button className="btn btn-danger" onClick={()=>removeItem(i)}>Remove</button>
                 </div>
                 </div>)}
