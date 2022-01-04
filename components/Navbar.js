@@ -30,7 +30,10 @@ export default function Navbar(){
                 try{
                     if(localStorage.username)
                     setUsername(localStorage.username)
-                    let response = await axios.post("http://localhost:8000/check",null, {withCredentials:true})
+                    let csrf = await axios.get("http://localhost:8000/validator/checker",{withCredentials:true})
+                    let token = csrf.data.token
+                    localStorage._csrf = token
+                    let response = await axios.post("http://localhost:8000/check",null, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
                     
                     if(response.data){
                         if(router.pathname == "/login" || router.pathname == "/register"){

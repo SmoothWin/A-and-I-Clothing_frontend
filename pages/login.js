@@ -49,7 +49,7 @@ export default function Login() {
                 document.getElementById("submitSpan").innerHTML="Please enter the email"
             }
             else {
-                let response = await axios.post("http://localhost:8000/login", {email: email, password: password}, {withCredentials: true})
+                let response = await axios.post("http://localhost:8000/login", {email: email, password: password}, {withCredentials: true, headers:{"csrf-token":localStorage._csrf}})
                 localStorage.username = response.data.firstName +" "+response.data.lastName
                 router.push("/")
             }

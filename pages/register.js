@@ -215,7 +215,7 @@ export default function Register() {
                     "country": country,
                     "postalCode": postalCode,
                     "organizationName": organisationName
-                }, {withCredentials: true})
+                }, {withCredentials: true, headers:{"csrf-token":localStorage._csrf}})
                 await router.push('/login')
             }
         } catch (e) {

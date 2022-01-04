@@ -17,13 +17,13 @@ export default function Store(){
         try{
             if(hasNext == false) return
             if(append == false){
-                const responseData = await (await axios.get(url, {withCredentials:true})).data
+                const responseData = await (await axios.get(url, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})).data
                 setData(responseData.products)
                 if(responseData.has_next)
                     setHasNext(true)
             } else{
                 const initialData = data
-                const responseData = await (await axios.get(url, {withCredentials:true})).data
+                const responseData = await (await axios.get(url, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})).data
                 setData(initialData.concat(responseData.products))
                 if(responseData.has_more){
                     setHasNext(true)

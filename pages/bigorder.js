@@ -36,7 +36,7 @@ export default function Bigorder(){
         data.append('file', selectedFile)
         try{
             let response = await axios.post("http://localhost:8000/bigorders/upload", data,{ 
-                withCredentials:true
+                withCredentials:true, headers:{"csrf-token":localStorage._csrf}
             })
             setMessage(response.data.message)
             document.getElementById("file_form").value = '';
