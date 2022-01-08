@@ -5,6 +5,9 @@ import axios from "axios"
 import Navbar from "../../components/Navbar";
 import { useRouter } from "next/router";
 
+//custom api imports
+import { addToCart, getCart } from "../../api/cart";
+
 // const productUrl = "https://api.stripe.com/v1/products"
 
 export default function Product(){
@@ -35,8 +38,13 @@ export default function Product(){
     },[isMounted,productId])
 
 
-    function handleItemClick(product){
+    async function handleItemClick(product){
         try{
+            try{
+                await getCart()
+            }catch(e){
+                
+            }
             if(!localStorage.cart)
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)
@@ -56,6 +64,7 @@ export default function Product(){
                 });
             }
             localStorage.setItem("cart", JSON.stringify(list))
+            await addToCart()
         }catch(e){
             console.log(e)
         }

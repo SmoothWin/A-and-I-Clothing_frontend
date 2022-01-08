@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import axios from "axios";
+
+//custom imports
+import {addToCart, getCart} from "../api/cart"
+
 
 export default function ShoppingCart(props){
     const [isMounted, setIsMounted] = useState(false)
@@ -13,7 +18,13 @@ export default function ShoppingCart(props){
         setIsMounted(true)
     })
     async function getItems(){
-        setItems(JSON.parse(localStorage.getItem("cart"))?.items)
+        try{
+            await getCart()
+            
+            setItems(JSON.parse(localStorage.getItem("cart"))?.items)
+        }catch(e){
+            setItems(JSON.parse(localStorage.getItem("cart"))?.items)
+        }
     }
 
     useEffect(()=>{
@@ -26,7 +37,7 @@ export default function ShoppingCart(props){
     useEffect(()=>{
         
         if(isMounted){
-            document.addEventListener('itemInserted', (e)=>{
+            document.addEventListener('itemInserted', async (e)=>{
                 setLoading(true)
                 setItems(JSON.parse(localStorage?.getItem("cart"))?.items)
             })
@@ -41,7 +52,7 @@ export default function ShoppingCart(props){
         }
     },[props.isOn])
 
-    function removeItem(index){
+    async function removeItem(index){
         try{
         let stateItems = items;
         stateItems.splice(index, 1)
@@ -50,22 +61,28 @@ export default function ShoppingCart(props){
         cart.items.splice(index, 1)
         // console.log(cart)
         localStorage.setItem("cart", JSON.stringify(cart))
+        
+        await addToCart()
+      
         }catch(e){
             console.log(e)
         }
     }
 
-    function handleDecrementQuantity(product){
+    async function handleDecrementQuantity(product){
         try{
             const cart = JSON.parse(localStorage?.cart)
-            cart.items.forEach(item=>{
+            cart.items.forEach(async item=>{
                 if(item.id == product.id){
                     if(item.quantity < 2) return
                     item.quantity = item.quantity - 1
                     
                     localStorage.setItem("cart", JSON.stringify(cart))
+                    await addToCart()
+                    
                 }
             })
+            
 
         }catch(e){
 
@@ -74,11 +91,13 @@ export default function ShoppingCart(props){
     function handleIncrementQuantity(product){
         try{
             const cart = JSON.parse(localStorage?.cart)
-            cart.items.forEach(item=>{
+            cart.items.forEach(async item=>{
                 if(item.id == product.id){
                     item.quantity = item.quantity + 1
                     
                     localStorage.setItem("cart", JSON.stringify(cart))
+                    await addToCart()
+                    
                 }
             })
 

@@ -5,6 +5,9 @@ import axios from "axios"
 import Navbar from "../components/Navbar";
 import Link from "next/link";
 
+//custom api imports
+import { addToCart, getCart } from "../api/cart";
+
 const productUrl = "http://localhost:8000/v1/products"
 
 export default function Store(){
@@ -85,8 +88,13 @@ export default function Store(){
     },[data])
 
 
-    function handleItemClick(product){
+    async function handleItemClick(product){
         try{
+            try{
+                await getCart()
+            }catch(e){
+                
+            }
             if(!localStorage.cart)
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)
@@ -106,6 +114,7 @@ export default function Store(){
                 });
             }
             localStorage.setItem("cart", JSON.stringify(list))
+            await addToCart()
         }catch(e){
             console.log(e)
         }

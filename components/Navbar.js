@@ -64,9 +64,10 @@ export default function Navbar(){
 
     async function handleLogout(){
         try{
+            
+            await axios.post("http://localhost:8000/logout",null,{withCredentials: true, headers:{"csrf-token":localStorage._csrf} })
             localStorage.removeItem("username")
             setUsername(null)
-            await axios.post("http://localhost:8000/logout",null,{withCredentials: true})
         }catch(e){
 
         }
