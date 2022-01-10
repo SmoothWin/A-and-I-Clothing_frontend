@@ -46,14 +46,20 @@ export default function Navbar(){
                     setLoading(false)
                     
                 }catch(e){
-                    if(router.pathname == "/bigorder"){
-                        router.push("/login")
+                    try{
+                        await axios.post("http://localhost:8000/token",null,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+                        setLoading(false)
+                    }catch(e){
+                        if(router.pathname == "/bigorder"){
+                            router.push("/login")
+                        }
+                        if(localStorage.username){
+                            localStorage.removeItem("username")
+                            setUsername(null)
+                        }
+                        setLoading(false)
                     }
-                    if(localStorage.username){
-                        localStorage.removeItem("username")
-                        setUsername(null)
-                    }
-                    setLoading(false)
+                    
                 }
             },700)
             }
