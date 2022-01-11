@@ -1,15 +1,28 @@
 import Navbar from "../components/Navbar";
 import Head from "next/head";
 import BootstrapJS from "../components/Bootstrap";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 
 export default function Login() {
     const router = useRouter();
+    const [mounted, setMounted] = useState(false)
     const [email,setEmail]=useState(null)
     const [password,setPassword]=useState(null)
+    const [checked, setChecked]=useState(false)
+
+    useEffect(()=>{
+        setMounted(true)
+    })
+    useEffect(()=>{
+        if(mounted){
+            console.log((typeof localStorage.rememberMe == "undefined")?false:localStorage.rememberMe)
+            document.getElementById("customCheck1").checked = (typeof localStorage.rememberMe == "undefined")?checked:JSON.parse(localStorage.rememberMe)
+        }
+    },[mounted])
+
     function handleEmail(e){
         let input = e.target.value;
         if(input === ""){
@@ -50,13 +63,22 @@ export default function Login() {
                 document.getElementById("submitSpan").innerHTML="Please enter the email"
             }
             else {
-                let response = await axios.post("http://localhost:8000/login", {email: email, password: password}, {withCredentials: true, headers:{"csrf-token":localStorage._csrf}})
-                localStorage.username = response.data.firstName +" "+response.data.lastName
+                let response = await axios.post("http://localhost:8000/login", {email: email, password: password, checked: checked}, {withCredentials: true, headers:{"csrf-token":localStorage._csrf}})
+                localStorage.rememberMe = checked
+                localStorage.username = response.data.firstName +" "+response.data.lastName.charAt(0)+"."
+                
                 router.push("/")
             }
         }catch(e){
-            document.getElementById("submitSpan").innerHTML="Something went wrong with the login process"
+            if(e.response.status == 429){
+                document.getElementById("submitSpan").innerHTML="Too many login attempts were made.\nPlease try again Later."
+            }else{
+                document.getElementById("submitSpan").innerHTML="Something went wrong with the login process"
+            }
         }
+    }
+    function handleCheck(e){
+        setChecked(e.target.checked)
     }
     return (
         <div className={styles.container}>
@@ -86,7 +108,7 @@ export default function Login() {
 
                 <div className="form-group">
                     <div className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                        <input type="checkbox" className="custom-control-input" onClick={handleCheck} id="customCheck1" />
                         <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
                     </div>
                 </div>
