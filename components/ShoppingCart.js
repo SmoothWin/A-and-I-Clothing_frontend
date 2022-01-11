@@ -76,13 +76,11 @@ export default function ShoppingCart(props){
         try{
             const cart = JSON.parse(localStorage?.cart)
             cart.items.forEach(async item=>{
-                if(item.id == product.id){
+                if(item.id === product.id){
                     if(item.quantity < 2) return
                     item.quantity = item.quantity - 1
-                    
                     localStorage.setItem("cart", JSON.stringify(cart))
                     await addToCart()
-                    
                 }
             })
             
@@ -95,7 +93,7 @@ export default function ShoppingCart(props){
         try{
             const cart = JSON.parse(localStorage?.cart)
             cart.items.forEach(async item=>{
-                if(item.id == product.id){
+                if(item.id === product.id){
                     item.quantity = item.quantity + 1
                     
                     localStorage.setItem("cart", JSON.stringify(cart))
@@ -124,13 +122,14 @@ export default function ShoppingCart(props){
                 {items?.map((x, i)=><div className="d-flex flex-row justify-content-center" key={i}>
                 <div className="d-flex flex-column align-items-center justify-content-center" style={{width:"200px", height: "100px"}}>
                     {/* <img src={x.images[0]} style={{width:"90%", height:"100%"}}/>  */}
-                    <Image placeholder="blur" blurDataURL="data:image/webp;base64,UklGRqoCAABXRUJQVlA4WAoAAAAgAAAAuAAAuAAASUNDUBgCAAAAAAIYAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAAAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3BhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADTLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANlZQOCBsAAAA8AoAnQEquQC5AD7tdrhWqaclI6BIATAdiWlu4XaxG0AT2vRVwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdAAAP7/dCkAAAAAAAAA" loader={contentfulLoader} src={x.images[0]} height={80} width={120}/>
+                    <Image placeholder="blur" blurDataURL="data:image/webp;base64,UklGRqoCAABXRUJQVlA4WAoAAAAgAAAAuAAAuAAASUNDUBgCAAAAAAIYAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAAAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3BhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADTLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANlZQOCBsAAAA8AoAnQEquQC5AD7tdrhWqaclI6BIATAdiWlu4XaxG0AT2vRVwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdAAAP7/dCkAAAAAAAAA"
+                           loader={contentfulLoader} src={x?.images[0]} height={80} width={120}/>
                     {/* try Image from next/Images */}
-                    <div>{`$${returnNumberDecimals(x.pricedata.price_string, x.quantity)} ${x.pricedata.currency.toUpperCase()}`}</div>
+                    <div>{(typeof x?.pricedata === "undefined")?null:`$${returnNumberDecimals(x?.pricedata?.price_string, x?.quantity)} ${x?.pricedata?.currency.toUpperCase()}`}</div>
                 </div>
                 <div className="d-flex flex-column align-items-center justify-content-around">
-                    <span>{x.name}</span>
-                    <div><button onClick={()=>handleDecrementQuantity(x)}>{"<"}</button>{x.quantity}<button onClick={()=>handleIncrementQuantity(x)}>{">"}</button></div>
+                    <span>{x?.name}</span>
+                    <div><button onClick={()=>handleDecrementQuantity(x)}>{"<"}</button>{x?.quantity}<button onClick={()=>handleIncrementQuantity(x)}>{">"}</button></div>
                     <button className="btn btn-danger" onClick={()=>removeItem(i)}>Remove</button>
                 </div>
                 </div>)}
