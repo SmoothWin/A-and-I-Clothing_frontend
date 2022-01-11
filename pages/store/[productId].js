@@ -5,6 +5,9 @@ import axios from "axios"
 import Navbar from "../../components/Navbar";
 import { useRouter } from "next/router";
 
+//custom utility imports
+import {returnNumberDecimals} from "../../utilities/transformCurrencyString"
+
 //custom api imports
 import { addToCart, getCart } from "../../api/cart";
 
@@ -78,6 +81,7 @@ export default function Product(){
         <div key={item?.id}>
             <h2>{item?.name}</h2> 
             {(item.images[0])?<img width={600} src={item?.images[0]}/>:null}
+            <span>{`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span>
             <div>{item?.description}</div>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
         </div>

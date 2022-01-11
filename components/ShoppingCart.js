@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 
+//custom utility imports
+import {returnNumberDecimals} from "../utilities/transformCurrencyString"
+
 //custom imports
 import {addToCart, getCart} from "../api/cart"
 
@@ -119,10 +122,11 @@ export default function ShoppingCart(props){
         cartItems =
     <div className="d-flex flex-column align-items-center" style={{overflowY:"auto", marginTop:"20px"}}>
                 {items?.map((x, i)=><div className="d-flex flex-row justify-content-center" key={i}>
-                <div className="d-flex align-items-center justify-content-center" style={{width:"200px", height: "100px"}}>
+                <div className="d-flex flex-column align-items-center justify-content-center" style={{width:"200px", height: "100px"}}>
                     {/* <img src={x.images[0]} style={{width:"90%", height:"100%"}}/>  */}
                     <Image placeholder="blur" blurDataURL="data:image/webp;base64,UklGRqoCAABXRUJQVlA4WAoAAAAgAAAAuAAAuAAASUNDUBgCAAAAAAIYAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAAAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3BhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADTLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANlZQOCBsAAAA8AoAnQEquQC5AD7tdrhWqaclI6BIATAdiWlu4XaxG0AT2vRVwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdAAAP7/dCkAAAAAAAAA" loader={contentfulLoader} src={x.images[0]} height={80} width={120}/>
                     {/* try Image from next/Images */}
+                    <div>{`$${returnNumberDecimals(x.pricedata.price_string, x.quantity)} ${x.pricedata.currency.toUpperCase()}`}</div>
                 </div>
                 <div className="d-flex flex-column align-items-center justify-content-around">
                     <span>{x.name}</span>

@@ -5,6 +5,9 @@ import axios from "axios"
 import Navbar from "../components/Navbar";
 import Link from "next/link";
 
+//custom utility imports
+import {returnNumberDecimals} from "../utilities/transformCurrencyString"
+
 //custom api imports
 import { addToCart, getCart } from "../api/cart";
 
@@ -65,7 +68,7 @@ export default function Store(){
               //do get data for rest
               if(entry.isIntersecting){
                     observer.unobserve(element)
-                    getData(`${productUrl}/?starting_after=${data[data.length - 1].id}`, true)
+                    getData(`${productUrl}/?starting_after=${data[data.length - 1].pricedata.id}-${data[data.length - 1].id}`, true)
                     
                 }
             }
@@ -125,8 +128,9 @@ export default function Store(){
         <Navbar/>
         {data.map(product => 
         <div key={product.id} id={product.id}>
-            <h2>{product.name}</h2> 
-            <Link href={`/store/${product.id}`}><a><img width={300} height={400} src={product.images[0]}/></a></Link>
+            <h2>{product.name}</h2>
+            <div>{`$${returnNumberDecimals(product.pricedata.price_string)} ${product.pricedata.currency.toUpperCase()}`}</div>
+            <Link href={`/store/${product.pricedata.id}`}><a><img width={300} height={400} src={product.images[0]}/></a></Link>
             <br/>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
         </div>)}
