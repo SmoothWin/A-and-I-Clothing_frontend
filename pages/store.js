@@ -11,6 +11,12 @@ import {returnNumberDecimals} from "../utilities/transformCurrencyString"
 //custom api imports
 import { addToCart, getCart } from "../api/cart";
 
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+import styles from "../styles/Home.module.css";
+import Head from "next/head";
+import BootstrapJS from "../components/Bootstrap";
+
 const productUrl = "http://localhost:8000/v1/products"
 
 export default function Store(){
@@ -124,16 +130,28 @@ export default function Store(){
     }
 
     return(
-    <>
+        <>
+            <Head>
+                <title>{"Store - A&I Clothing"}</title>
+                <BootstrapJS/>
+            </Head>
         <Navbar/>
+            <br/>
+            <h2 className="display-4 col-10 mx-6 text-sm-start"><b>&nbsp;&nbsp;&nbsp;Store</b></h2>
+        <center>
+        <Carousel width={500}>
         {data.map(product => 
         <div key={product.id} id={product.id}>
+            <Link href={`/store/${product.pricedata.id}`}><a><img width={300} height={400} src={product.images[0]}/></a></Link>
             <h2>{product.name}</h2>
             <div>{`$${returnNumberDecimals(product.pricedata.price_string)} ${product.pricedata.currency.toUpperCase()}`}</div>
-            <Link href={`/store/${product.pricedata.id}`}><a><img width={300} height={400} src={product.images[0]}/></a></Link>
             <br/>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
+            <br/>
+            <br/>
+            <br/>
         </div>)}
-    </>
+    </Carousel></center>
+        </>
     )
 }
