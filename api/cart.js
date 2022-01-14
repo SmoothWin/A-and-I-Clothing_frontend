@@ -6,7 +6,8 @@ const cartGetUrl="http://localhost:8000/cart/get"
 
 export async function addToCart(){
     try{
-        await axios.post(cartAddUrl,{cart:localStorage.getItem("cart")}, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+       const response = await axios.post(cartAddUrl,{cart:localStorage.getItem("cart")}, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+       localStorage.setItem("cart", response.data.cart_data)
     }catch(e){
 
     }

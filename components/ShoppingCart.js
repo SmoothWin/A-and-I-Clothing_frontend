@@ -63,10 +63,11 @@ export default function ShoppingCart(props){
         let cart = JSON.parse(localStorage.getItem("cart"))
         cart.items.splice(index, 1)
         // console.log(cart)
-        localStorage.setItem("cart", JSON.stringify(cart))
+        localStorage.cart = JSON.stringify(cart)
         
         await addToCart()
-      
+        setItems(JSON.parse(localStorage?.getItem("cart"))?.items)
+        
         }catch(e){
             console.log(e)
         }
@@ -79,8 +80,10 @@ export default function ShoppingCart(props){
                 if(item.id === product.id){
                     if(item.quantity < 2) return
                     item.quantity = item.quantity - 1
-                    localStorage.setItem("cart", JSON.stringify(cart))
-                    await addToCart()
+                    localStorage.cart = JSON.stringify(cart)
+                    await addToCart(localStorage.cart)
+                    setItems(JSON.parse(localStorage?.getItem("cart"))?.items)
+
                 }
             })
             
@@ -96,8 +99,9 @@ export default function ShoppingCart(props){
                 if(item.id === product.id){
                     item.quantity = item.quantity + 1
                     
-                    localStorage.setItem("cart", JSON.stringify(cart))
+                    localStorage.cart = JSON.stringify(cart)
                     await addToCart()
+                    setItems(JSON.parse(localStorage?.getItem("cart"))?.items)
                     
                 }
             })
