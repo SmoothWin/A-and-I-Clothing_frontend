@@ -47,7 +47,9 @@ export default function Navbar(){
                     
                 }catch(e){
                     try{
-                        await axios.post("http://localhost:8000/token",null,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+                        const response = await axios.post("http://localhost:8000/token",null,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+                        localStorage.username = response.data.firstName+" "+response.data.lastName.charAt(0)+"."
+                        setUsername(response.data.firstName+" "+response.data.lastName.charAt(0)+".")
                         setLoading(false)
                     }catch(e){
                         if(router.pathname == "/bigorder"){
