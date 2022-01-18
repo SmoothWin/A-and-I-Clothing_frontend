@@ -11,6 +11,12 @@ import {returnNumberDecimals} from "../utilities/transformCurrencyString"
 //custom api imports
 import { addToCart, getCart } from "../api/cart";
 
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import styles from "../styles/Home.module.css";
+import Head from "next/head";
+import BootstrapJS from "../components/Bootstrap";
+
 const productUrl = "http://localhost:8000/v1/products"
 
 export default function Store(){
@@ -18,6 +24,24 @@ export default function Store(){
     const [data, setData] = useState([])
     const [hasNext, setHasNext] = useState(true)
     const [observer, setObserver] = useState(null)
+    const responsive = {
+        superLargeDesktop: {
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+        }
+    };
 
     async function getData(url, append = false){
         try{
@@ -124,16 +148,31 @@ export default function Store(){
     }
 
     return(
-    <>
+        <>
+            <Head>
+                <title>{"Store - A&I Clothing"}</title>
+                <BootstrapJS/>
+            </Head>
         <Navbar/>
+            <br/>
+            <h2 className="display-4 col-10 mx-6 text-sm-start"><b>&nbsp;&nbsp;&nbsp;Store</b></h2>
+            <br/>
+            <br/>
+            <br/>
+        <center>
+        <Carousel responsive={responsive}>
         {data.map(product => 
         <div key={product.id} id={product.id}>
+            <Link href={`/store/${product.pricedata.id}`}><a><img width={300} height={300} src={product.images[0]}/></a></Link>
             <h2>{product.name}</h2>
             <div>{`$${returnNumberDecimals(product.pricedata.price_string)} ${product.pricedata.currency.toUpperCase()}`}</div>
-            <Link href={`/store/${product.pricedata.id}`}><a><img width={300} height={400} src={product.images[0]}/></a></Link>
             <br/>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
+            <br/>
+            <br/>
+            <br/>
         </div>)}
-    </>
+    </Carousel></center>
+        </>
     )
 }
