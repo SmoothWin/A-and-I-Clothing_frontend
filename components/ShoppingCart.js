@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 
+import {loadStripe} from '@stripe/stripe-js';
+
 //custom utility imports
 import {returnNumberDecimals} from "../utilities/transformCurrencyString"
 
 //custom imports
 import {addToCart, getCart} from "../api/cart"
-
 
 export default function ShoppingCart(props){
     const [isMounted, setIsMounted] = useState(false)
@@ -111,6 +112,27 @@ export default function ShoppingCart(props){
         }
     }
 
+    async function handleCheckout(){
+        try{
+            const stripe = await loadStripe("pk_test_51KB1usFGY0rqHsBf7XJBHBigx5dDnWpznW6xppcjtVvoJEM6xSTxEevCTtnIqsEEBYUI4wF9F4k4uONww0NikGhl00jt17CWYM")
+            
+            const cart = JSON.parse(localStorage?.cart)
+            const items_list = []
+            cart.items.forEach((item)=>{
+                items_list.push({
+                    id:item.pricedata.id,
+                    tot_quantity:item.quantity,
+                })
+            })
+            const response = await axios.post("http://localhost:8000/checkout",{items:items_list}
+            ,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+            
+            stripe.redirectToCheckout({sessionId:response.data.id})
+        }catch(e){
+            console.log(e)
+        }
+    }
+
 
     let display = null
     let cartItems = null
@@ -149,7 +171,7 @@ export default function ShoppingCart(props){
             <div className="d-flex flex-column justify-content-between" style={{height:"100%"}}>
                 {cartItems}
                 
-                <button className="btn btn-success" style={{width:"90%", marginLeft:"auto", marginRight:"auto", marginBottom:"50px"}}>Checkout</button>
+                <button onClick={handleCheckout} className="btn btn-success" style={{width:"90%", marginLeft:"auto", marginRight:"auto", marginBottom:"50px"}}>Checkout</button>
             </div>
         </div>
     }
