@@ -29,7 +29,7 @@ export default function Product(){
         async function getData(){
             try{
                 const responseData = await (await axios.get(`http://localhost:8000/v1/products/${productId}`, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})).data
-                console.log(responseData)
+                // console.log(responseData)
                 setProduct(responseData)
             }catch(e){
                 console.log(e)
