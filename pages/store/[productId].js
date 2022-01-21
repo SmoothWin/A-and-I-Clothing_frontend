@@ -83,6 +83,9 @@ export default function Product(){
             {(item.images[0])?<img width={600} src={item?.images[0]}/>:null}
             <span>{`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span>
             <div>{item?.description}</div>
+            <select>
+                {Object.keys(item.metadata)?.map(x=><option key={x}>{x.replace("_quantity","")}</option>)}
+            </select>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
         </div>
     }
