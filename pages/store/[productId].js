@@ -47,7 +47,7 @@ export default function Product(){
         const selectedSizes = {}
         
             let prodId = product.id
-            let selectedSize = Object.keys(product.metadata).filter(x=>x.includes("_quantity"))[0]
+            let selectedSize = Object.entries(product.metadata).filter(x=>x[0].includes("_quantity")&& x[1]>0)[0]
 
             selectedSizes[prodId]=selectedSize
             console.log(selectedSizes)
@@ -120,7 +120,10 @@ export default function Product(){
             <span>{`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span>
             <div>{item?.description}</div>
             <select onChange={(e)=>handleItemSelection(e,item)}>
-                {Object.keys(item.metadata)?.map(x=><option value={x} key={x}>{x.replace("_quantity","")}</option>)}
+                {Object.entries(item.metadata)?.filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=>
+                <option value={x[0]} key={x[0]}>
+                    {x[0].replace("_quantity","")}
+                </option>)}
             </select>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
         </div>

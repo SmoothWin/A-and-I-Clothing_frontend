@@ -115,7 +115,7 @@ export default function Store(){
         const selectedSizes = {}
         data.forEach((x)=>{
             let prodId = x.id
-            let selectedSize = Object.keys(x.metadata).filter(x=>x.includes("_quantity"))[0]
+            let selectedSize = Object.entries(x.metadata).filter(x=>x[0].includes("_quantity")&&x[1]>0)[0]
 
             selectedSizes[prodId]=selectedSize
         })
@@ -200,10 +200,8 @@ export default function Store(){
             <div>{`$${returnNumberDecimals(product.pricedata.price_string)} ${product.pricedata.currency.toUpperCase()}`}</div>
             <br/>
             <div>
-                
-            {Object.keys(product.metadata).filter(x=>x.includes("_quantity"))[0]}
             <select onChange={(e)=>handleItemSelection(e,product)}>
-                {Object.keys(product.metadata).filter(x=>x.includes("_quantity")).map(x=><option value={x} key={x}>{x.replace("_quantity","")}</option>)}
+                {Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=><option value={x[0]} key={x[0]}>{x[0].replace("_quantity","")}</option>)}
             </select>
             </div>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
