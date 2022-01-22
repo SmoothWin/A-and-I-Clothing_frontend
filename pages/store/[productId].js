@@ -49,8 +49,8 @@ export default function Product(){
             let prodId = product.id
             let selectedSize = Object.entries(product.metadata).filter(x=>x[0].includes("_quantity")&& x[1]>0)[0]
 
-            selectedSizes[prodId]=selectedSize
-            console.log(selectedSizes)
+            selectedSizes[prodId]=selectedSize[0]
+            // console.log(selectedSizes)
         setSelectedSize(selectedSizes)
     }, [product])
 

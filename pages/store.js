@@ -117,7 +117,7 @@ export default function Store(){
             let prodId = x.id
             let selectedSize = Object.entries(x.metadata).filter(x=>x[0].includes("_quantity")&&x[1]>0)[0]
 
-            selectedSizes[prodId]=selectedSize
+            selectedSizes[prodId]=selectedSize[0]
         })
         setSelectedSize(selectedSizes)
     },[data])
@@ -157,7 +157,7 @@ export default function Store(){
                             delete item[Object.keys(item).find(x=>x.includes("_quantity"))]
                         // console.log(Object.keys(item))
                         item[selectedSize[product.id]] = 1
-                        // console.log(item[selectedSize[product.id]])
+                        console.log(selectedSize[product.id])
                     }
                 });
             }
