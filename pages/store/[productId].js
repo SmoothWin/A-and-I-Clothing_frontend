@@ -18,6 +18,7 @@ export default function Product(){
     const {productId} = router.query 
     const [isMounted, setIsMounted] = useState(false)
     const [product, setProduct] = useState(null)
+    const [selectedSize, setSelectedSize] = useState({})
     const [exists, setExists] = useState(true)
 
     useEffect(()=>{
@@ -40,8 +41,21 @@ export default function Product(){
             getData()
     },[isMounted,productId])
 
+    useEffect(()=>{
+        if(product == null)
+            return
+        const selectedSizes = {}
+        
+            let prodId = product.id
+            let selectedSize = Object.keys(product.metadata).filter(x=>x.includes("_quantity"))[0]
 
-    async function handleItemClick(product){
+            selectedSizes[prodId]=selectedSize
+            console.log(selectedSizes)
+        setSelectedSize(selectedSizes)
+    }, [product])
+
+
+    async function handleItemClick(item){
         try{
             try{
                 await getCart()
@@ -52,17 +66,28 @@ export default function Product(){
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)
             
-            if(list.items.some(item=>item.id == product.id)){
-                list.items.forEach(item => {
-                    if(item.id == product.id){
-                        item.quantity += 1
+            if(list.items.some(item=>item.id == item.id)){
+                list.items.forEach(product => {
+                    if(product.id == item.id){
+                        product.quantity += 1
+                        if(typeof product[selectedSize[item.id]] == "undefined")
+                            product[selectedSize[item.id]] = 1
+                        else
+                            product[selectedSize[item.id]] += 1
                     }
                 });
             } else{
-                list.items.push(product)
-                list.items.forEach(item => {
-                    if(item.id == product.id){
-                        item.quantity = 1
+                list.items.push(item)
+                list.items.forEach(product => {
+                    if(product.id == item.id){
+                        product.quantity = 1
+                        if(typeof Object.keys(product).find(x=>x.includes("_quantity")) != "undefined")
+                            
+
+                        delete product[Object.keys(product).find(x=>x.includes("_quantity"))]
+                        // console.log(Object.keys(item))
+                        product[selectedSize[item.id]] = 1
+                        // console.log(item[selectedSize[product.id]])
                     }
                 });
             }
@@ -71,6 +96,17 @@ export default function Product(){
         }catch(e){
             console.log(e)
         }
+    }
+
+    function handleItemSelection(e,item){
+        const selectedSizeModified = selectedSize
+        console.log(selectedSizeModified)
+
+        selectedSizeModified[item.id] = e.target.value
+        console.log(selectedSizeModified)
+
+        setSelectedSize(selectedSizeModified)
+
     }
 
     let item = null
@@ -83,8 +119,8 @@ export default function Product(){
             {(item.images[0])?<img width={600} src={item?.images[0]}/>:null}
             <span>{`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span>
             <div>{item?.description}</div>
-            <select>
-                {Object.keys(item.metadata)?.map(x=><option key={x}>{x.replace("_quantity","")}</option>)}
+            <select onChange={(e)=>handleItemSelection(e,item)}>
+                {Object.keys(item.metadata)?.map(x=><option value={x} key={x}>{x.replace("_quantity","")}</option>)}
             </select>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
         </div>
