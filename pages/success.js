@@ -48,9 +48,9 @@ export default function Success(){
         {
             sessionObj.map((x,k)=>
             <div key={k} className='mx-2'>
-                <div>{x.product_name}</div>
-                <img height={100} src={x.images[0]}/>
-                <div>{`Total Quantity: ${x.total_quantity}`}</div>
+                <div>{x?.product_name}</div>
+                <img height={100} src={(typeof x.images == "undefined")?null:x?.images[0]}/>
+                <div>{`Total Quantity: ${x?.total_quantity}`}</div>
                 <div className='d-flex'>
                     
                     
