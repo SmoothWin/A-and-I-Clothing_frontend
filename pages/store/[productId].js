@@ -66,7 +66,7 @@ export default function Product(){
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)
             
-            if(list.items.some(item=>item.id == item.id)){
+            if(list.items.some(product=>item.id == product.id)){
                 list.items.forEach(product => {
                     if(product.id == item.id){
                         product.quantity += 1
