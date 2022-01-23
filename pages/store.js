@@ -130,7 +130,7 @@ export default function Store(){
             }catch(e){
                 
             }
-            console.log(data)
+            // console.log(data)
             if(!localStorage.cart)
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)

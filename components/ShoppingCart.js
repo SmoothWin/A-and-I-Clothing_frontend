@@ -117,10 +117,20 @@ export default function ShoppingCart(props){
             
             const cart = JSON.parse(localStorage?.cart)
             const items_list = []
+
             cart.items.forEach((item)=>{
+            const quantityCategories = {}
+                Object.entries(item).forEach(x=>{
+                    if(x[0].includes("_quantity")){
+                        quantityCategories[x[0]]=x[1]
+                    }
+                })
+                console.log(quantityCategories)
                 items_list.push({
                     id:item.pricedata.id,
+                    product_id:item.id,
                     tot_quantity:item.quantity,
+                    category_quantities:quantityCategories
                 })
             })
             const response = await axios.post("http://localhost:8000/checkout",{items:items_list}
