@@ -43,6 +43,8 @@ export default function Success(){
         // console.log(sessionObj)
 
     return (
+        <>
+        <Navbar/>
         <div className='d-flex mx-2'>
         {
             sessionObj.map((x,k)=>
@@ -67,5 +69,6 @@ export default function Success(){
             )
         }
         </div>
+        </>
     )
 }
