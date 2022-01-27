@@ -20,6 +20,7 @@ export default function Product(){
     const {productId} = router.query 
     const [isMounted, setIsMounted] = useState(false)
     const [product, setProduct] = useState(null)
+    const [selectedSize, setSelectedSize] = useState({})
     const [exists, setExists] = useState(true)
 
     useEffect(()=>{
@@ -31,7 +32,7 @@ export default function Product(){
         async function getData(){
             try{
                 const responseData = await (await axios.get(`http://localhost:8000/v1/products/${productId}`, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})).data
-                console.log(responseData)
+                // console.log(responseData)
                 setProduct(responseData)
             }catch(e){
                 console.log(e)
@@ -42,8 +43,21 @@ export default function Product(){
             getData()
     },[isMounted,productId])
 
+    useEffect(()=>{
+        if(product == null)
+            return
+        const selectedSizes = {}
+        
+            let prodId = product.id
+            let selectedSize = Object.entries(product.metadata).filter(x=>x[0].includes("_quantity")&& x[1]>0)[0]
 
-    async function handleItemClick(product){
+            selectedSizes[prodId]=selectedSize[0]
+            // console.log(selectedSizes)
+        setSelectedSize(selectedSizes)
+    }, [product])
+
+
+    async function handleItemClick(item){
         try{
             try{
                 await getCart()
@@ -54,17 +68,28 @@ export default function Product(){
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)
             
-            if(list.items.some(item=>item.id == product.id)){
-                list.items.forEach(item => {
-                    if(item.id == product.id){
-                        item.quantity += 1
+            if(list.items.some(product=>item.id == product.id)){
+                list.items.forEach(product => {
+                    if(product.id == item.id){
+                        product.quantity += 1
+                        if(typeof product[selectedSize[item.id]] == "undefined")
+                            product[selectedSize[item.id]] = 1
+                        else
+                            product[selectedSize[item.id]] += 1
                     }
                 });
             } else{
-                list.items.push(product)
-                list.items.forEach(item => {
-                    if(item.id == product.id){
-                        item.quantity = 1
+                list.items.push(item)
+                list.items.forEach(product => {
+                    if(product.id == item.id){
+                        product.quantity = 1
+                        if(typeof Object.keys(product).find(x=>x.includes("_quantity")) != "undefined")
+                            
+
+                        delete product[Object.keys(product).find(x=>x.includes("_quantity"))]
+                        // console.log(Object.keys(item))
+                        product[selectedSize[item.id]] = 1
+                        // console.log(item[selectedSize[product.id]])
                     }
                 });
             }
@@ -73,6 +98,17 @@ export default function Product(){
         }catch(e){
             console.log(e)
         }
+    }
+
+    function handleItemSelection(e,item){
+        const selectedSizeModified = selectedSize
+        console.log(selectedSizeModified)
+
+        selectedSizeModified[item.id] = e.target.value
+        console.log(selectedSizeModified)
+
+        setSelectedSize(selectedSizeModified)
+
     }
 
     let item = null
@@ -92,13 +128,14 @@ export default function Product(){
             <br/>
             <center>
             {(item.images[0])?<img width={600} src={item?.images[0]}/>:null}
-                <br/>
-                <br/>
-            <h2>{item?.name}</h2>
-            <span>Price: {`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span>
-                <br/>
-            <div>Description: {item?.description}</div>
-                <br/>
+            <span>{`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span>
+            <div>{item?.description}</div>
+            <select onChange={(e)=>handleItemSelection(e,item)}>
+                {Object.entries(item.metadata)?.filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=>
+                <option value={x[0]} key={x[0]}>
+                    {x[0].replace("_quantity","")}
+                </option>)}
+            </select>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
             </center>
         </div>

@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 
+import {loadStripe} from '@stripe/stripe-js';
+
 //custom utility imports
 import {returnNumberDecimals} from "../utilities/transformCurrencyString"
 
 //custom imports
 import {addToCart, getCart} from "../api/cart"
-
 
 export default function ShoppingCart(props){
     const [isMounted, setIsMounted] = useState(false)
@@ -62,11 +63,11 @@ export default function ShoppingCart(props){
         setItems(stateItems)
         let cart = JSON.parse(localStorage.getItem("cart"))
         cart.items.splice(index, 1)
-        // console.log(cart)
-        localStorage.setItem("cart", JSON.stringify(cart))
+        localStorage.cart = JSON.stringify(cart)
         
         await addToCart()
-      
+        setItems(JSON.parse(localStorage?.getItem("cart"))?.items)
+        
         }catch(e){
             console.log(e)
         }
@@ -79,8 +80,10 @@ export default function ShoppingCart(props){
                 if(item.id === product.id){
                     if(item.quantity < 2) return
                     item.quantity = item.quantity - 1
-                    localStorage.setItem("cart", JSON.stringify(cart))
-                    await addToCart()
+                    localStorage.cart = JSON.stringify(cart)
+                    await addToCart(localStorage.cart)
+                    setItems(JSON.parse(localStorage?.getItem("cart"))?.items)
+
                 }
             })
             
@@ -96,14 +99,46 @@ export default function ShoppingCart(props){
                 if(item.id === product.id){
                     item.quantity = item.quantity + 1
                     
-                    localStorage.setItem("cart", JSON.stringify(cart))
+                    localStorage.cart = JSON.stringify(cart)
                     await addToCart()
+                    setItems(JSON.parse(localStorage?.getItem("cart"))?.items)
                     
                 }
             })
 
         }catch(e){
 
+        }
+    }
+
+    async function handleCheckout(){
+        try{
+            const stripe = await loadStripe("pk_test_51KB1usFGY0rqHsBf7XJBHBigx5dDnWpznW6xppcjtVvoJEM6xSTxEevCTtnIqsEEBYUI4wF9F4k4uONww0NikGhl00jt17CWYM")
+            
+            const cart = JSON.parse(localStorage?.cart)
+            const items_list = []
+
+            cart.items.forEach((item)=>{
+            const quantityCategories = {}
+                Object.entries(item).forEach(x=>{
+                    if(x[0].includes("_quantity")){
+                        quantityCategories[x[0]]=x[1]
+                    }
+                })
+                console.log(quantityCategories)
+                items_list.push({
+                    id:item.pricedata.id,
+                    product_id:item.id,
+                    tot_quantity:item.quantity,
+                    category_quantities:quantityCategories
+                })
+            })
+            const response = await axios.post("http://localhost:8000/checkout",{items:items_list}
+            ,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+            
+            stripe.redirectToCheckout({sessionId:response.data.id})
+        }catch(e){
+            console.log(e)
         }
     }
 
@@ -122,7 +157,7 @@ export default function ShoppingCart(props){
                 {items?.map((x, i)=><div className="d-flex flex-row justify-content-center" key={i}>
                 <div className="d-flex flex-column align-items-center justify-content-center" style={{width:"200px", height: "100px"}}>
                     {/* <img src={x.images[0]} style={{width:"90%", height:"100%"}}/>  */}
-                    <Image placeholder="blur" blurDataURL="data:image/webp;base64,UklGRqoCAABXRUJQVlA4WAoAAAAgAAAAuAAAuAAASUNDUBgCAAAAAAIYAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAAAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3BhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADTLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANlZQOCBsAAAA8AoAnQEquQC5AD7tdrhWqaclI6BIATAdiWlu4XaxG0AT2vRVwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdAAAP7/dCkAAAAAAAAA"
+                    <Image unoptimized={true} placeholder="blur" blurDataURL="data:image/webp;base64,UklGRqoCAABXRUJQVlA4WAoAAAAgAAAAuAAAuAAASUNDUBgCAAAAAAIYAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAAAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3BhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADTLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANlZQOCBsAAAA8AoAnQEquQC5AD7tdrhWqaclI6BIATAdiWlu4XaxG0AT2vRVwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdtouEGQQ1VJrttFwgyCGqpNdAAAP7/dCkAAAAAAAAA"
                            loader={contentfulLoader} src={x?.images[0]} height={80} width={120}/>
                     {/* try Image from next/Images */}
                     <div>{(typeof x?.pricedata === "undefined")?null:`$${returnNumberDecimals(x?.pricedata?.price_string, x?.quantity)} ${x?.pricedata?.currency.toUpperCase()}`}</div>
@@ -145,7 +180,7 @@ export default function ShoppingCart(props){
             <div className="d-flex flex-column justify-content-between" style={{height:"100%"}}>
                 {cartItems}
                 
-                <button className="btn btn-success" style={{width:"90%", marginLeft:"auto", marginRight:"auto", marginBottom:"50px"}}>Checkout</button>
+                <button onClick={handleCheckout} className="btn btn-success" style={{width:"90%", marginLeft:"auto", marginRight:"auto", marginBottom:"50px"}}>Checkout</button>
             </div>
         </div>
     }

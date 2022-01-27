@@ -14,37 +14,34 @@ export default function Bigorder(){
     useEffect(()=>{
         setMounted(true)
     },[])
-    // useEffect(()=>{
-    //     async function checkBigOrder(){
-    //         try{
-    //             if(mounted){
-    //                 await axios.get("http://localhost:8000/bigorders", {withCredentials:true})
-    //             }
-    //         }
-    //         catch (e){
-    //             router.push('/login')
-    //         }
-    //     }
-    //     checkBigOrder()
-
-    // },[mounted])
 
     function onChangeHandler(e){
         setSelectedFile(e.target.files[0])
     }
+
+    /**
+     * @param {FormData} formData form data list where the file submission file is in
+     */
+    async function submitFile(formData){
+        let response = await axios.post("http://localhost:8000/bigorders/upload", formData,{ 
+            withCredentials:true, headers:{"csrf-token":localStorage._csrf}
+        })
+        setMessage(response.data.message)
+        document.getElementById("file_form").value = '';
+        setSelectedFile(null)
+    }
+
     async function onClickHandler(e){
+        if(selectedFile == null) return
         const data = new FormData() 
         data.append('file', selectedFile)
         try{
-            let response = await axios.post("http://localhost:8000/bigorders/upload", data,{ 
-                withCredentials:true, headers:{"csrf-token":localStorage._csrf}
-            })
-            setMessage(response.data.message)
-            document.getElementById("file_form").value = '';
-            setSelectedFile(null)
-
+            await submitFile(data)
         }catch(e){
-            console.log(e)
+            if(e.response.status == 401 || e.response.status == 403){
+                await axios.post("http://localhost:8000/token",null,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+                await submitFile(data)
+            }
         }
     }
     return (

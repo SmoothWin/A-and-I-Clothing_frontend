@@ -13,7 +13,6 @@ import { addToCart, getCart } from "../api/cart";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import BootstrapJS from "../components/Bootstrap";
 
@@ -22,6 +21,7 @@ const productUrl = "http://localhost:8000/v1/products"
 export default function Store(){
     const [isMounted, setIsMounted] = useState(false)
     const [data, setData] = useState([])
+    const [selectedSize, setSelectedSize] = useState({})
     const [hasNext, setHasNext] = useState(true)
     const [observer, setObserver] = useState(null)
     const responsive = {
@@ -112,6 +112,14 @@ export default function Store(){
     useEffect(()=>{
         if(data.length > 0 && hasNext)
             setObserver(addIntersectionObserver())
+        const selectedSizes = {}
+        data.forEach((x)=>{
+            let prodId = x.id
+            let selectedSize = Object.entries(x.metadata).filter(x=>x[0].includes("_quantity")&&x[1]>0)[0]
+
+            selectedSizes[prodId]=selectedSize[0]
+        })
+        setSelectedSize(selectedSizes)
     },[data])
 
 
@@ -122,6 +130,7 @@ export default function Store(){
             }catch(e){
                 
             }
+            // console.log(data)
             if(!localStorage.cart)
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)
@@ -130,6 +139,11 @@ export default function Store(){
                 list.items.forEach(item => {
                     if(item.id == product.id){
                         item.quantity += 1
+                        if(typeof item[selectedSize[product.id]] == "undefined")
+                            item[selectedSize[product.id]] = 1
+                        else
+                            item[selectedSize[product.id]] += 1
+                            
                     }
                 });
             } else{
@@ -137,6 +151,13 @@ export default function Store(){
                 list.items.forEach(item => {
                     if(item.id == product.id){
                         item.quantity = 1
+                        if(typeof Object.keys(item).find(x=>x.includes("_quantity")) != "undefined")
+                            
+
+                            delete item[Object.keys(item).find(x=>x.includes("_quantity"))]
+                        // console.log(Object.keys(item))
+                        item[selectedSize[product.id]] = 1
+                        console.log(selectedSize[product.id])
                     }
                 });
             }
@@ -145,6 +166,17 @@ export default function Store(){
         }catch(e){
             console.log(e)
         }
+    }
+
+    function handleItemSelection(e,product){
+        const selectedSizeModified = selectedSize
+        console.log(selectedSizeModified)
+
+        selectedSizeModified[product.id] = e.target.value
+        console.log(selectedSizeModified)
+
+        setSelectedSize(selectedSizeModified)
+
     }
 
     return(
@@ -167,6 +199,12 @@ export default function Store(){
             <h2>{product.name}</h2>
             <div>{`$${returnNumberDecimals(product.pricedata.price_string)} ${product.pricedata.currency.toUpperCase()}`}</div>
             <br/></a></Link>
+            <br/>
+            <div>
+            <select onChange={(e)=>handleItemSelection(e,product)}>
+                {Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=><option value={x[0]} key={x[0]}>{x[0].replace("_quantity","")}</option>)}
+            </select>
+            </div>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
         </div>)}
             </div>
