@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 
 //components
 import Navbar from "../components/Navbar";
+import Link from "next/link";
 
 export default function Home() {
 
@@ -26,7 +27,7 @@ export default function Home() {
           A small family-owned business that has only the goal of providing the best quality of clothing they can offer to their client.
           Going away from nowadays capitalist profit-looking economy, A & I Clothing is trying to offer the best price they can.<br/><br/>
           Offering clothing solutions for businesses, schools and events off all sizes.<br/>
-          <a href="/bigorder">Contact us</a> to submit your request!<br/><br/>
+          <Link href={`/bigorder`}><a>Contact us</a></Link> to submit your request!<br/><br/>
           Your needs are our priorities.
         </p>
 
