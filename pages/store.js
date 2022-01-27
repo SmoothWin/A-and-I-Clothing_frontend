@@ -116,9 +116,9 @@ export default function Store(){
         const selectedSizes = {}
         data.forEach((x)=>{
             let prodId = x.id
-            let selectedSize = Object.entries(x.metadata).filter(x=>x[0].includes("_quantity")&&x[1]>0)[0]
+            let selectedSize = Object.entries(x.metadata).filter(x=>x[0].includes("_quantity")&&x[1]>0)[0] || null
 
-            selectedSizes[prodId]=selectedSize[0]
+            selectedSizes[prodId]= (selectedSize == null)?null:selectedSize[0]
         })
         setSelectedSize(selectedSizes)
     },[data])
@@ -202,9 +202,13 @@ export default function Store(){
             <br/></a></Link>
             <br/>
             <div>
-            <select onChange={(e)=>handleItemSelection(e,product)}>
-                {Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=><option value={x[0]} key={x[0]}>{x[0].replace("_quantity","")}</option>)}
-            </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {(Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).length > 0 )?
+                <select onChange={(e)=>handleItemSelection(e,product)}>
+                    {Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=><option value={x[0]} key={x[0]}>{x[0].replace("_quantity","")}</option>)}
+                </select>: <span>Item out of Stock</span>}
+            
+        
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
         </div>
         </div>)}

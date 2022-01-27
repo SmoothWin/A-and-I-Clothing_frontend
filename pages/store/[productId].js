@@ -49,9 +49,9 @@ export default function Product(){
         const selectedSizes = {}
         
             let prodId = product.id
-            let selectedSize = Object.entries(product.metadata).filter(x=>x[0].includes("_quantity")&& x[1]>0)[0]
+            let selectedSize = Object.entries(product.metadata).filter(x=>x[0].includes("_quantity")&& x[1]>0)[0] || null
 
-            selectedSizes[prodId]=selectedSize[0]
+            selectedSizes[prodId]=(selectedSize == null)?null:selectedSize[0]
             // console.log(selectedSizes)
         setSelectedSize(selectedSizes)
     }, [product])
@@ -131,12 +131,14 @@ export default function Product(){
             <div>{item?.description}<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span></div>
                 <br/>
                 <br/>
-            <select onChange={(e)=>handleItemSelection(e,item)}>
-                {Object.entries(item.metadata)?.filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=>
-                <option value={x[0]} key={x[0]}>
-                    {x[0].replace("_quantity","")}
-                </option>)}
-            </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {(Object.entries(item.metadata)?.filter(x=>x[0].includes("_quantity") && x[1] > 0).length > 0)?
+                <select onChange={(e)=>handleItemSelection(e,item)}>
+                    {Object.entries(item.metadata)?.filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=>
+                    <option value={x[0]} key={x[0]}>
+                        {x[0].replace("_quantity","")}
+                    </option>)}
+                </select>
+                :<span>Item out of Stock</span>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
             </center>
         </div>
