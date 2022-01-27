@@ -3,12 +3,11 @@
 }
 
 .main {
-  min-height: 100vh;
+  min-height: 84vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
@@ -54,6 +53,7 @@
   margin: 4rem 0;
   line-height: 1.5;
   font-size: 1.5rem;
+  max-width: 70%;
 }
 
 .code {
@@ -70,7 +70,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
+  max-width: 80%;
 }
 
 .card {
