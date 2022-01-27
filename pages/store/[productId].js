@@ -127,15 +127,16 @@ export default function Product(){
             <br/>
             <br/>
             <center>
-            {(item.images[0])?<img width={600} src={item?.images[0]}/>:null}
-            <span>{`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span>
-            <div>{item?.description}</div>
+            {(item.images[0])?<img width={400} height={400} src={item?.images[0]}/>:null}<br/><br/>
+            <div>{item?.description}<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span></div>
+                <br/>
+                <br/>
             <select onChange={(e)=>handleItemSelection(e,item)}>
                 {Object.entries(item.metadata)?.filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=>
                 <option value={x[0]} key={x[0]}>
                     {x[0].replace("_quantity","")}
                 </option>)}
-            </select>
+            </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
             </center>
         </div>
