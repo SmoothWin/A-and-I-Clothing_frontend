@@ -4,6 +4,7 @@ import axios from "axios"
 //custom imports
 import Navbar from "../components/Navbar";
 import Link from "next/link";
+import styles from '../styles/Home.module.css'
 
 //custom utility imports
 import {returnNumberDecimals} from "../utilities/transformCurrencyString"
@@ -203,9 +204,9 @@ export default function Store(){
             <div>
             <select onChange={(e)=>handleItemSelection(e,product)}>
                 {Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=><option value={x[0]} key={x[0]}>{x[0].replace("_quantity","")}</option>)}
-            </select>
-            </div>
+            </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
+        </div>
         </div>)}
             </div>
     </center>
