@@ -10,6 +10,8 @@ import {returnNumberDecimals} from "../../utilities/transformCurrencyString"
 
 //custom api imports
 import { addToCart, getCart } from "../../api/cart";
+import Head from "next/head";
+import BootstrapJS from "../../components/Bootstrap";
 
 // const productUrl = "https://api.stripe.com/v1/products"
 
@@ -79,16 +81,31 @@ export default function Product(){
         item = product
         display = 
         <div key={item?.id}>
-            <h2>{item?.name}</h2> 
+            <Head>
+                <title>{item?.name}{" - A&I Clothing"}</title>
+                <BootstrapJS/>
+            </Head>
+            <br/>
+            <h2 className="display-4 col-10 mx-6 text-sm-start"><b>&nbsp;&nbsp;&nbsp;Store</b></h2>
+            <br/>
+            <br/>
+            <br/>
+            <center>
             {(item.images[0])?<img width={600} src={item?.images[0]}/>:null}
-            <span>{`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span>
-            <div>{item?.description}</div>
+                <br/>
+                <br/>
+            <h2>{item?.name}</h2>
+            <span>Price: {`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span>
+                <br/>
+            <div>Description: {item?.description}</div>
+                <br/>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
+            </center>
         </div>
     }
 
     
-    if(exists == false)
+    if(exists === false)
         display = 
         <div>
             The product doesn&apos;t exist

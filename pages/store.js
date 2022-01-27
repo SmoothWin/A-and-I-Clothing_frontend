@@ -160,19 +160,17 @@ export default function Store(){
             <br/>
             <br/>
         <center>
-        <Carousel responsive={responsive}>
+            <div className={styles.grid}>
         {data.map(product => 
-        <div key={product.id} id={product.id}>
-            <Link href={`/store/${product.pricedata.id}`}><a><img width={300} height={300} src={product.images[0]}/></a></Link>
+        <div key={product.id} id={product.id} className={styles.card}>
+            <Link href={`/store/${product.pricedata.id}`}><a><img width={250} height={250} src={product.images[0]}/>
             <h2>{product.name}</h2>
             <div>{`$${returnNumberDecimals(product.pricedata.price_string)} ${product.pricedata.currency.toUpperCase()}`}</div>
-            <br/>
+            <br/></a></Link>
             <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
-            <br/>
-            <br/>
-            <br/>
         </div>)}
-    </Carousel></center>
+            </div>
+    </center>
         </>
     )
 }

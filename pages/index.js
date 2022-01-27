@@ -19,56 +19,37 @@ export default function Home() {
   <Navbar/>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a style={{color:"black", fontWeight:"bold", fontFamily:"\"Times New Roman\", Times, serif", textDecorationLine:"underline", textDecorationColor:"red"}}>A & I Clothing</a>
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          A small family-owned business that has only the goal of providing the best quality of clothing they can offer to their client.
+          Going away from nowadays capitalist profit-looking economy, A & I Clothing is trying to offer the best price they can.<br/><br/>
+          Offering clothing solutions for businesses, schools and events off all sizes.<br/>
+          <a href="/bigorder">Contact us</a> to submit your request!<br/><br/>
+          Your needs are our priorities.
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
+          <a href="https://www.linkedin.com/company/a-i-clothing/" className={styles.card}>
+            <h2>LinkedIn &rarr;</h2>
+            <p>Follow our company on the best business network</p>
           </a>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          <a href="https://www.facebook.com/aiclothingsydd" className={styles.card}>
+            <h2>Facebook &rarr;</h2>
+            <p>Follow us on the largest social network</p>
           </a>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
+          <a href="https://www.instagram.com/a_i_clothing/" className={styles.card}>
+            <h2>Instagram &rarr;</h2>
+            <p>Follow our journey as a small business</p>
           </a>
         </div>
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+        Copyright © A & I Clothing G.P.
       </footer>
     </div>
   )
