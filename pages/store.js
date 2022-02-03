@@ -106,7 +106,7 @@ export default function Store(){
     }
 
     useEffect(()=>{
-        if(hasNext == false)
+        if(hasNext === false)
            observer?.unobserve(document.getElementById(data[data.length - 1].id))
     },[observer])
 
@@ -136,9 +136,9 @@ export default function Store(){
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)
             
-            if(list.items.some(item=>item.id == product.id)){
+            if(list.items.some(item=>item.id === product.id)){
                 list.items.forEach(item => {
-                    if(item.id == product.id){
+                    if(item.id === product.id){
                         item.quantity += 1
                         if(typeof item[selectedSize[product.id]] == "undefined")
                             item[selectedSize[product.id]] = 1
@@ -150,7 +150,7 @@ export default function Store(){
             } else{
                 list.items.push(product)
                 list.items.forEach(item => {
-                    if(item.id == product.id){
+                    if(item.id === product.id){
                         item.quantity = 1
                         if(typeof Object.keys(item).find(x=>x.includes("_quantity")) != "undefined")
                             
@@ -209,7 +209,7 @@ export default function Store(){
             
         
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
+            <button id="addCart" className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
         </div>
         </div>)}
             </div>
