@@ -108,7 +108,7 @@ export default function Store(){
     }
 
     useEffect(()=>{
-        if(hasNext == false)
+        if(hasNext === false)
            observer?.unobserve(document.getElementById(data[data.length - 1].id))
     },[observer])
 
@@ -144,9 +144,9 @@ export default function Store(){
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)
             
-            if(list.items.some(item=>item.id == product.id)){
+            if(list.items.some(item=>item.id === product.id)){
                 list.items.forEach(item => {
-                    if(item.id == product.id){
+                    if(item.id === product.id){
                         item.quantity += 1
                         if(typeof item[selectedSize[product.id]] == "undefined")
                             item[selectedSize[product.id]] = 1
@@ -158,7 +158,7 @@ export default function Store(){
             } else{
                 list.items.push(product)
                 list.items.forEach(item => {
-                    if(item.id == product.id){
+                    if(item.id === product.id){
                         item.quantity = 1
                         if(typeof Object.keys(item).find(x=>x.includes("_quantity")) != "undefined")
                             
@@ -172,7 +172,7 @@ export default function Store(){
             }
             localStorage.setItem("cart", JSON.stringify(list))
             await addToCart()
-            
+
             plusOneRefs.current[product.id].classList.add(styles.one)
         }catch(e){
             console.log(e)
@@ -225,7 +225,7 @@ export default function Store(){
                 <div ref={(el)=>addToRefs(el,product.id)} className={styles.oneStatic}>+1</div>
             </div>
             :null}
-            
+
         </div>
         </div>)}
             </div>
