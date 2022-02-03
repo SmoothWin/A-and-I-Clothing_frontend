@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar'
 
 //utility
 import {returnNumberDecimals} from '../utilities/transformCurrencyString'
+import url from "../config/config"
 
 export default function Success(){
     const router = useRouter()
@@ -22,7 +23,7 @@ export default function Success(){
         // console.log(mounted)
         async function getSession(id){
             try{
-            const response = await axios.get(`http://localhost:8000/checkout/session?id=${id}`, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+            const response = await axios.get(`${url}/checkout/session?id=${id}`, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
             const data = await response.data
             // console.log(data.line_items)
 

@@ -6,6 +6,7 @@ import {loadStripe} from '@stripe/stripe-js';
 
 //custom utility imports
 import {returnNumberDecimals} from "../utilities/transformCurrencyString"
+import url from "../config/config"
 
 //custom imports
 import {addToCart, getCart} from "../api/cart"
@@ -133,7 +134,7 @@ export default function ShoppingCart(props){
                     category_quantities:quantityCategories
                 })
             })
-            const response = await axios.post("http://localhost:8000/checkout",{items:items_list}
+            const response = await axios.post(`${url}/checkout`,{items:items_list}
             ,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
             
             stripe.redirectToCheckout({sessionId:response.data.id})

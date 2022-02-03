@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import BootstrapJS from './Bootstrap'
 import Spinner from "../components/Spinner"
 import ShoppingCart from './ShoppingCart'
+import url from "../config/config"
 
 export default function Navbar(){
     const router = useRouter()
@@ -30,10 +31,10 @@ export default function Navbar(){
                 try{
                     if(localStorage.username)
                     setUsername(localStorage.username)
-                    let csrf = await axios.get("http://localhost:8000/validator/checker",{withCredentials:true})
+                    let csrf = await axios.get(`${url}/validator/checker`,{withCredentials:true})
                     let token = csrf.data.token
                     localStorage._csrf = token
-                    let response = await axios.post("http://localhost:8000/check",null, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+                    let response = await axios.post(`${url}/check`,null, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
                     
                     if(response.data){
                         if(router.pathname == "/login" || router.pathname == "/register"){
@@ -47,7 +48,7 @@ export default function Navbar(){
                     
                 }catch(e){
                     try{
-                        const response = await axios.post("http://localhost:8000/token",null,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+                        const response = await axios.post(`${url}/token`,null,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
                         localStorage.username = response.data.firstName+" "+response.data.lastName.charAt(0)+"."
                         setUsername(response.data.firstName+" "+response.data.lastName.charAt(0)+".")
                         setLoading(false)
@@ -73,7 +74,7 @@ export default function Navbar(){
     async function handleLogout(){
         try{
             
-            await axios.post("http://localhost:8000/logout",null,{withCredentials: true, headers:{"csrf-token":localStorage._csrf} })
+            await axios.post(`${url}/logout`,null,{withCredentials: true, headers:{"csrf-token":localStorage._csrf} })
             localStorage.removeItem("username")
             setUsername(null)
         }catch(e){

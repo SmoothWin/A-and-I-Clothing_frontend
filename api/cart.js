@@ -1,8 +1,9 @@
 import axios from "axios";
+import url from "../config/config"
 
 
-const cartAddUrl= "http://localhost:8000/cart/add"
-const cartGetUrl="http://localhost:8000/cart/get"
+const cartAddUrl= `${url}/cart/add`
+const cartGetUrl=`${url}/cart/get`
 
 export async function addToCart(){
     try{
@@ -11,7 +12,7 @@ export async function addToCart(){
     }catch(e){
         try{
             if((e.response.status == 401 || e.response.status == 403) && localStorage.username){
-                await axios.post("http://localhost:8000/token",null,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+                await axios.post(`${url}/token`,null,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
                 const response = await axios.post(cartAddUrl,{cart:localStorage.getItem("cart")}, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
                 localStorage.setItem("cart", response.data.cart_data)
             }

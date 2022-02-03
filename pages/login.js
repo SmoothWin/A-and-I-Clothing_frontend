@@ -6,6 +6,10 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 
+//custom imports
+import url from "../config/config"
+
+
 export default function Login() {
     const router = useRouter();
     const [mounted, setMounted] = useState(false)
@@ -63,7 +67,7 @@ export default function Login() {
                 document.getElementById("submitSpan").innerHTML="Please enter the email"
             }
             else {
-                let response = await axios.post("http://localhost:8000/login", {email: email, password: password, checked: checked}, {withCredentials: true, headers:{"csrf-token":localStorage._csrf}})
+                let response = await axios.post(`${url}/login`, {email: email, password: password, checked: checked}, {withCredentials: true, headers:{"csrf-token":localStorage._csrf}})
                 localStorage.rememberMe = checked
                 localStorage.username = response.data.firstName +" "+response.data.lastName.charAt(0)+"."
                 

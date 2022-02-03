@@ -9,6 +9,9 @@ import en from 'react-phone-number-input/locale/en.json';
 import 'react-phone-number-input/style.css';
 import styles from "../styles/Home.module.css";
 
+//custom imports
+import url from "../config/config"
+
 export default function Register() {
     const router = useRouter()
     const [email,setEmail]=useState(null)
@@ -202,7 +205,7 @@ export default function Register() {
                 document.getElementById("submitSpan").innerHTML = "Please fill out the missing fields"
             } else {
                 document.getElementById("submitSpan").innerHTML = ""
-                await axios.post("http://localhost:8000/register", {
+                await axios.post(`${url}/register`, {
                     "firstName": firstName,
                     "lastName": lastName,
                     "email": email,

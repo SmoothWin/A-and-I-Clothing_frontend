@@ -8,6 +8,7 @@ import styles from '../styles/Home.module.css'
 
 //custom utility imports
 import {returnNumberDecimals} from "../utilities/transformCurrencyString"
+import url from "../config/config"
 
 //custom api imports
 import { addToCart, getCart } from "../api/cart";
@@ -17,7 +18,7 @@ import "react-multi-carousel/lib/styles.css";
 import Head from "next/head";
 import BootstrapJS from "../components/Bootstrap";
 
-const productUrl = "http://localhost:8000/v1/products"
+const productUrl = `${url}/v1/products`
 
 export default function Store(){
     const [isMounted, setIsMounted] = useState(false)

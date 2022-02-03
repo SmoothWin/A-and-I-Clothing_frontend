@@ -6,6 +6,9 @@ import BootstrapJS from '../components/Bootstrap'
 import Navbar from "../components/Navbar";
 import styles from "../styles/Home.module.css";
 
+//custom imports
+import url from "../config/config"
+
 export default function Bigorder(){
     const router = useRouter();
     const [selectedFile, setSelectedFile] = useState(null);
@@ -23,7 +26,7 @@ export default function Bigorder(){
      * @param {FormData} formData form data list where the file submission file is in
      */
     async function submitFile(formData){
-        let response = await axios.post("http://localhost:8000/bigorders/upload", formData,{ 
+        let response = await axios.post(`${url}/bigorders/upload`, formData,{ 
             withCredentials:true, headers:{"csrf-token":localStorage._csrf}
         })
         setMessage(response.data.message)
@@ -39,7 +42,7 @@ export default function Bigorder(){
             await submitFile(data)
         }catch(e){
             if(e.response.status == 401 || e.response.status == 403){
-                await axios.post("http://localhost:8000/token",null,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
+                await axios.post(`${url}/token`,null,{withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
                 await submitFile(data)
             }
         }
