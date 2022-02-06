@@ -9,6 +9,8 @@ import Navbar from '../components/Navbar'
 import {returnNumberDecimals} from '../utilities/transformCurrencyString'
 import url from "../config/config"
 
+import {addToCart} from "../api/cart"
+
 export default function Success(){
     const router = useRouter()
     const {id} = router.query
@@ -26,8 +28,11 @@ export default function Success(){
             const response = await axios.get(`${url}/checkout/session?id=${id}`, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
             const data = await response.data
             // console.log(data.line_items)
+            localStorage.cart = JSON.stringify({items:[]})
+            await addToCart()
 
             setSession(data.line_items)
+
             }catch(e){
                 console.log(e)
             }
@@ -37,8 +42,8 @@ export default function Success(){
             
     },[id])
 
-    let sessionObj = null
-    if(session != null)
+    let sessionObj = []
+    if(session.length > 0)
         sessionObj = session
         // console.log(sessionObj)
 
@@ -47,7 +52,7 @@ export default function Success(){
         <Navbar/>
         <div className='d-flex mx-2'>
         {
-            sessionObj.map((x,k)=>
+            (Object.values(sessionObj[0]).length < 1)?<div>No items to display</div>:sessionObj.map((x,k)=>
             <div key={k} className='mx-2'>
                 <div>{x?.product_name}</div>
                 <img height={100} src={(typeof x.images == "undefined")?null:x?.images[0]}/>

@@ -74,6 +74,7 @@
 }
 
 .card {
+  height: 450px;
   margin: 1rem;
   padding: 1.5rem;
   text-align: left;
@@ -106,6 +107,58 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
+}
+
+.one{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  font-size: 1rem;
+  position: absolute;
+  left: 93px;
+  top:7px;
+  border-radius: 20%;
+  color: black;
+  background: white;
+  animation: bubbleUp 1.75s ease-in-out forwards;
+}
+.oneStatic{
+  position: absolute;
+  opacity: 0;
+}
+@keyframes bubbleUp {
+  0%{
+    border-radius: 20%;
+    left:93px;
+    opacity: 0;
+    background-color: #198754;
+    color:black;
+  }
+  20%{
+    color:white;
+  }
+  40%{
+    color:#198754;
+    border-radius: 50%;
+    background-color: white;
+    left:110px;
+    opacity: 1;
+  }
+  85%{
+    opacity: 1;
+    top: -20px;
+    left:110px;
+  }
+  100%{
+    top: -20px;
+    left:110px;
+    opacity: 0;
+    border-radius: 50%;
+    color:#198754;
+    background-color: white;
+  }
 }
 
 @media (max-width: 600px) {

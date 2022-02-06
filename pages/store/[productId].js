@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import axios from "axios"
 
 //custom imports
 import Navbar from "../../components/Navbar";
 import { useRouter } from "next/router";
+import styles from '../../styles/Home.module.css'
 
 //custom utility imports
 import {returnNumberDecimals} from "../../utilities/transformCurrencyString"
@@ -23,6 +24,8 @@ export default function Product(){
     const [product, setProduct] = useState(null)
     const [selectedSize, setSelectedSize] = useState({})
     const [exists, setExists] = useState(true)
+
+    const plusOneRef = useRef()
 
     useEffect(()=>{
         setIsMounted(true)
@@ -60,6 +63,7 @@ export default function Product(){
 
     async function handleItemClick(item){
         try{
+            plusOneRef.current.classList.remove(styles.one)
             try{
                 await getCart()
             }catch(e){
@@ -96,6 +100,7 @@ export default function Product(){
             }
             localStorage.setItem("cart", JSON.stringify(list))
             await addToCart()
+            plusOneRef.current.classList.add(styles.one)
         }catch(e){
             console.log(e)
         }
@@ -132,6 +137,7 @@ export default function Product(){
             <div>{item?.description}<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`$${returnNumberDecimals(item?.pricedata.price_string)} ${item?.pricedata.currency.toUpperCase()}`}</span></div>
                 <br/>
                 <br/>
+                <div className="d-flex justify-content-center">
                 {(Object.entries(item.metadata)?.filter(x=>x[0].includes("_quantity") && x[1] > 0).length > 0)?
                 <select onChange={(e)=>handleItemSelection(e,item)}>
                     {Object.entries(item.metadata)?.filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=>
@@ -140,7 +146,16 @@ export default function Product(){
                     </option>)}
                 </select>
                 :<span>Item out of Stock</span>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
+                {(Object.entries(item.metadata)?.filter(x=>x[0].includes("_quantity") && x[1] > 0).length > 0)
+                ?
+                <div style={{position:"relative"}}>
+                    <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
+                    <div ref={plusOneRef} className={styles.oneStatic}>+1</div>
+                </div>
+                :
+                null}
+                </div>
+            
             </center>
         </div>
     }

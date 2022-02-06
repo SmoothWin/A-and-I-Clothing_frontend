@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import axios from "axios"
 
 //custom imports
@@ -13,7 +13,6 @@ import url from "../config/config"
 //custom api imports
 import { addToCart, getCart } from "../api/cart";
 
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Head from "next/head";
 import BootstrapJS from "../components/Bootstrap";
@@ -26,6 +25,8 @@ export default function Store(){
     const [selectedSize, setSelectedSize] = useState({})
     const [hasNext, setHasNext] = useState(true)
     const [observer, setObserver] = useState(null)
+
+    const plusOneRefs = useRef({})
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -124,9 +125,15 @@ export default function Store(){
         setSelectedSize(selectedSizes)
     },[data])
 
+    function addToRefs(el,prodId){
+        if( el && !Object.values(plusOneRefs.current).includes(el)){
+            plusOneRefs.current[prodId] = el
+        }
+    }
 
     async function handleItemClick(product){
         try{
+            plusOneRefs.current[product.id].classList.remove(styles.one)
             try{
                 await getCart()
             }catch(e){
@@ -165,6 +172,8 @@ export default function Store(){
             }
             localStorage.setItem("cart", JSON.stringify(list))
             await addToCart()
+            
+            plusOneRefs.current[product.id].classList.add(styles.one)
         }catch(e){
             console.log(e)
         }
@@ -202,7 +211,7 @@ export default function Store(){
             <div>{`$${returnNumberDecimals(product.pricedata.price_string)} ${product.pricedata.currency.toUpperCase()}`}</div>
             <br/></a></Link>
             <br/>
-            <div>
+            <div className="d-flex">
                 {(Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).length > 0 )?
                 <select onChange={(e)=>handleItemSelection(e,product)}>
                     {Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=><option value={x[0]} key={x[0]}>{x[0].replace("_quantity","")}</option>)}
@@ -210,7 +219,13 @@ export default function Store(){
             
         
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
+            {(Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).length > 0 )?
+            <div style={{position:"relative"}}>
+                <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
+                <div ref={(el)=>addToRefs(el,product.id)} className={styles.oneStatic}>+1</div>
+            </div>
+            :null}
+            
         </div>
         </div>)}
             </div>

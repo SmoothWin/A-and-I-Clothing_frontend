@@ -165,7 +165,7 @@ export default function ShoppingCart(props){
                 </div>
                 <div className="d-flex flex-column align-items-center justify-content-around">
                     <span>{x?.name}</span>
-                    <text type={"number"}>{x?.quantity}</text>
+                    <div type={"number"}>{x?.quantity}</div>
                     <button className="btn btn-danger" onClick={()=>removeItem(i)}>Remove</button>
                 </div>
                 </div>)}
