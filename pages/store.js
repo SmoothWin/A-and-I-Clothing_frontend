@@ -46,8 +46,8 @@ export default function Store(){
 
     async function getData(url, append = false){
         try{
-            if(hasNext == false) return
-            if(append == false){
+            if(hasNext === false) return
+            if(append === false){
                 const responseData = await (await axios.get(url, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})).data
                 setData(responseData.products)
                 if(responseData.has_next)
@@ -117,7 +117,9 @@ export default function Store(){
         data.forEach((x)=>{
             let prodId = x.id
             let selectedSize = Object.entries(x.metadata).filter(x=>x[0].includes("_quantity")&&x[1]>0)[0] || null
-
+            if(selectedSize === null){
+                document.getElementById("addCart").hidden
+            }
             selectedSizes[prodId]= (selectedSize == null)?null:selectedSize[0]
         })
         setSelectedSize(selectedSizes)

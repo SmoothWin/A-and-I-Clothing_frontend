@@ -36,7 +36,7 @@ export default function Navbar(){
                     let response = await axios.post("http://localhost:8000/check",null, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
                     
                     if(response.data){
-                        if(router.pathname == "/login" || router.pathname == "/register"){
+                        if(router.pathname === "/login" || router.pathname === "/register"){
                             router.push("/")
                         }
                         localStorage.username = response.data.firstName+" "+response.data.lastName.charAt(0)+"."
@@ -52,7 +52,7 @@ export default function Navbar(){
                         setUsername(response.data.firstName+" "+response.data.lastName.charAt(0)+".")
                         setLoading(false)
                     }catch(e){
-                        if(router.pathname == "/bigorder"){
+                        if(router.pathname === "/bigorder"){
                             router.push("/login")
                         }
                         if(localStorage.username){
@@ -93,7 +93,7 @@ export default function Navbar(){
 
     let right = null
     let loader = <Spinner/>
-    if(loading == false){
+    if(loading === false){
         loader = null
     }
     if(username){
@@ -118,7 +118,7 @@ export default function Navbar(){
             <BootstrapJS/>
         </Head>
             {loader}
-            <nav id="navbar" className="navbar navbar-expand-sm navbar-light bg-light" style={{zIndex:"100000"}}>
+            <nav id="navbar" className="navbar navbar-expand-sm navbar-light " style={{zIndex:"100000", borderBottomStyle: "solid", borderBottomColor: "red"}}>
                 <div className="container-fluid">
                     <Link href="/"><a className="navbar-brand" style={{color:"black", fontWeight:"bold", fontFamily:"\"Times New Roman\", Times, serif", textDecorationLine:"underline", textDecorationColor:"red"}}>A & I Clothing</a></Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
