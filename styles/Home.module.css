@@ -74,7 +74,7 @@
 }
 
 .card {
-  height: 450px;
+  height: auto;
   margin: 1rem;
   padding: 1.5rem;
   text-align: left;
