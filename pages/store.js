@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 
 //custom imports
@@ -8,16 +8,16 @@ import styles from '../styles/Home.module.css'
 
 //custom utility imports
 import {returnNumberDecimals} from "../utilities/transformCurrencyString"
-import url from "../config/config"
 
 //custom api imports
 import { addToCart, getCart } from "../api/cart";
 
+import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Head from "next/head";
 import BootstrapJS from "../components/Bootstrap";
 
-const productUrl = `${url}/v1/products`
+const productUrl = "http://localhost:8000/v1/products"
 
 export default function Store(){
     const [isMounted, setIsMounted] = useState(false)
@@ -25,8 +25,6 @@ export default function Store(){
     const [selectedSize, setSelectedSize] = useState({})
     const [hasNext, setHasNext] = useState(true)
     const [observer, setObserver] = useState(null)
-
-    const plusOneRefs = useRef({})
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -48,8 +46,8 @@ export default function Store(){
 
     async function getData(url, append = false){
         try{
-            if(hasNext == false) return
-            if(append == false){
+            if(hasNext === false) return
+            if(append === false){
                 const responseData = await (await axios.get(url, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})).data
                 setData(responseData.products)
                 if(responseData.has_next)
@@ -108,7 +106,7 @@ export default function Store(){
     }
 
     useEffect(()=>{
-        if(hasNext == false)
+        if(hasNext === false)
            observer?.unobserve(document.getElementById(data[data.length - 1].id))
     },[observer])
 
@@ -119,21 +117,17 @@ export default function Store(){
         data.forEach((x)=>{
             let prodId = x.id
             let selectedSize = Object.entries(x.metadata).filter(x=>x[0].includes("_quantity")&&x[1]>0)[0] || null
-
+            if(selectedSize === null){
+                document.getElementById("addCart").hidden
+            }
             selectedSizes[prodId]= (selectedSize == null)?null:selectedSize[0]
         })
         setSelectedSize(selectedSizes)
     },[data])
 
-    function addToRefs(el,prodId){
-        if( el && !Object.values(plusOneRefs.current).includes(el)){
-            plusOneRefs.current[prodId] = el
-        }
-    }
 
     async function handleItemClick(product){
         try{
-            plusOneRefs.current[product.id].classList.remove(styles.one)
             try{
                 await getCart()
             }catch(e){
@@ -144,9 +138,9 @@ export default function Store(){
             localStorage.cart = JSON.stringify({"items":[]})
             const list = JSON.parse(localStorage?.cart)
             
-            if(list.items.some(item=>item.id == product.id)){
+            if(list.items.some(item=>item.id === product.id)){
                 list.items.forEach(item => {
-                    if(item.id == product.id){
+                    if(item.id === product.id){
                         item.quantity += 1
                         if(typeof item[selectedSize[product.id]] == "undefined")
                             item[selectedSize[product.id]] = 1
@@ -158,7 +152,7 @@ export default function Store(){
             } else{
                 list.items.push(product)
                 list.items.forEach(item => {
-                    if(item.id == product.id){
+                    if(item.id === product.id){
                         item.quantity = 1
                         if(typeof Object.keys(item).find(x=>x.includes("_quantity")) != "undefined")
                             
@@ -172,8 +166,6 @@ export default function Store(){
             }
             localStorage.setItem("cart", JSON.stringify(list))
             await addToCart()
-            
-            plusOneRefs.current[product.id].classList.add(styles.one)
         }catch(e){
             console.log(e)
         }
@@ -211,7 +203,7 @@ export default function Store(){
             <div>{`$${returnNumberDecimals(product.pricedata.price_string)} ${product.pricedata.currency.toUpperCase()}`}</div>
             <br/></a></Link>
             <br/>
-            <div className="d-flex">
+            <div>
                 {(Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).length > 0 )?
                 <select onChange={(e)=>handleItemSelection(e,product)}>
                     {Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=><option value={x[0]} key={x[0]}>{x[0].replace("_quantity","")}</option>)}
@@ -219,13 +211,7 @@ export default function Store(){
             
         
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {(Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).length > 0 )?
-            <div style={{position:"relative"}}>
-                <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
-                <div ref={(el)=>addToRefs(el,product.id)} className={styles.oneStatic}>+1</div>
-            </div>
-            :null}
-            
+            <button id="addCart" className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
         </div>
         </div>)}
             </div>

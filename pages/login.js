@@ -93,34 +93,36 @@ export default function Login() {
             <Navbar/>
             <br/>
             <br/>
-            <div className="container-sm">
+            <div className="container col-lg-4">
             <form onSubmit={onSubmit}>
-                <h3>Sign In</h3>
-                <span className="alert-danger" id="submitSpan"></span>
+                <h3 style={{textAlign: "center"}}>Sign In</h3>
+                <br/>
+                <span className="alert-danger" id="submitSpan"/>
 
                 <div className="form-group">
                     <label>Email address</label>
                     <input type="email" className="form-control" placeholder="Enter email" onChange={handleEmail}/>
-                    <span className="alert-danger" id="emailSpan"></span>
+                    <span className="alert-danger" id="emailSpan"/>
                 </div>
+                <br/>
 
                 <div className="form-group">
                     <label>Password</label>
                     <input type="password" className="form-control" placeholder="Enter password" onChange={handlePassword}/>
-                    <span className="alert-danger" id="passwordSpan"></span>
+                    <span className="alert-danger" id="passwordSpan"/>
                 </div>
+                <br/>
 
                 <div className="form-group">
                     <div className="custom-control custom-checkbox">
                         <input type="checkbox" className="custom-control-input" onClick={handleCheck} id="customCheck1" />
-                        <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
+                        <label className="custom-control-label" htmlFor="customCheck1">&nbsp;Remember me</label>
                     </div>
                 </div>
+                <br/>
 
                 <button type="submit" className="btn btn-primary btn-block">Submit</button>
-                <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
-                </p>
+                <br/>
             </form>
                 </div>
         </div>
