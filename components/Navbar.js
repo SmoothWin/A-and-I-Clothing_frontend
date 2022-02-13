@@ -107,8 +107,8 @@ export default function Navbar(){
     }else{
         right= 
         <div className="d-flex">
-            <Link href="/register"><a className="nav-link">Register</a></Link>
-            <Link href="/login"><a className="nav-link">Login</a></Link>
+            <Link href="/register"><a className="nav-link"  style={{color: "black"}}>Register</a></Link>
+            <Link href="/login"><a className="nav-link"  style={{color: "black"}}>Login</a></Link>
         </div>
     }
 
@@ -128,10 +128,10 @@ export default function Navbar(){
                     <div className="collapse navbar-collapse" id="mynavbar">
                         <ul className="navbar-nav me-auto">
                             <li className="nav-item">
-                                <Link href="/bigorder"><a className="nav-link">Big Order</a></Link>
+                                <Link href="/bigorder"><a className="nav-link" style={{color: "black"}}>Big Order</a></Link>
                             </li>
                             <li className="nav-item">
-                                <Link href="/store"><a className="nav-link">Store</a></Link>
+                                <Link href="/store"><a className="nav-link" style={{color: "black"}}>Store</a></Link>
                             </li>
                         </ul>
                         
