@@ -229,46 +229,52 @@ export default function Register() {
     return (
         <div className={styles.container}>
             <Head>
-                <title>{"Login - A&I Clothing"}</title>
+                <title>{"Register - A&I Clothing"}</title>
                 <BootstrapJS/>
             </Head>
             <Navbar/>
             <br/>
             <br/>
-            <div className="container-sm">
+            <div className="container col-lg-4">
                 <form onSubmit={onSubmit}>
-                    <h3>Register</h3>
-                    <span className="alert-danger" id="submitSpan"></span>
+                    <h3 style={{textAlign: "center"}}>Register</h3>
+                    <br/>
+                    <span className="alert-danger" id="submitSpan"/>
 
                     <div className="form-group">
                         <label>First name<b className="text-danger"> *</b></label>
                         <input id="register_fName" type="text" className="form-control" placeholder="First name" onChange={handleFirstName}/>
-                        <span className="alert-danger" id="firstNameSpan"></span>
+                        <span className="alert-danger" id="firstNameSpan"/>
                     </div>
+                    <br/>
 
                     <div className="form-group">
                         <label>Last name<b className="text-danger"> *</b></label><br/>
                         <input id="register_lName" type="text" className="form-control" placeholder="Last name" onChange={handleLastName}/>
-                        <span className="alert-danger" id="lastNameSpan"></span>
+                        <span className="alert-danger" id="lastNameSpan"/>
                     </div>
+                    <br/>
 
                     <div className="form-group">
                         <label>Email address<b className="text-danger"> *</b></label>
                         <input id="register_email" type="email" className="form-control" placeholder="Enter email" onChange={handleEmail}/>
-                        <span className="alert-danger" id="emailSpan"></span>
+                        <span className="alert-danger" id="emailSpan"/>
                     </div>
+                    <br/>
 
                     <div className="form-group">
                         <label>Password<b className="text-danger"> *</b></label>
                         <input id="register_password" type="password" className="form-control" placeholder="Enter password" onChange={handlePassword}/>
-                        <span className="alert-danger" id="passwordSpan"></span>
+                        <span className="alert-danger" id="passwordSpan"/>
                     </div>
+                    <br/>
 
                     <div className="form-group">
                         <label>Confirm Password<b className="text-danger"> *</b></label>
                         <input id="register_cpassword" type="password" className="form-control" placeholder="Confirm password" onChange={handleConfirmPassword}/>
-                        <span className="alert-danger" id="confirmPasswordSpan"></span>
+                        <span className="alert-danger" id="confirmPasswordSpan"/>
                     </div>
+                    <br/>
 
                     <div className="form-group">
                         <div>
@@ -276,37 +282,45 @@ export default function Register() {
                         </div>
                             <CountrySelect id="register_country" labels={en} value={country} onChange={handleCountry} name="countrySelect" />&nbsp;&nbsp;&nbsp;
                             <Input id="register_phone" country={country} value={phoneNumber} onChange={handlePhoneNumber} placeholder="Enter phone number" name="phoneNumber" />
-                        <span className="alert-danger" id="phoneNumberSpan"></span>
-                        <span className="alert-danger" id="countrySpan"></span>
+                        <span className="alert-danger" id="phoneNumberSpan"/>
+                        <span className="alert-danger" id="countrySpan"/>
                     </div>
+                    <br/>
                     <div className="form-group">
                         <label>Address<b className="text-danger"> *</b></label>
                         <input id="register_address" type="text" className="form-control" placeholder="Address" onChange={handleAddress}/>
-                        <span className="alert-danger" id="addressSpan"></span>
+                        <span className="alert-danger" id="addressSpan"/>
                     </div>
+                    <br/>
                     <div className="form-group">
                         <label>Apartment Number</label>
                         <input id="register_apartNum" type="text" className="form-control" placeholder="Apartment number" onChange={handleCivicNumber}/>
-                        <span className="alert-danger" id="civicSpan"></span>
+                        <span className="alert-danger" id="civicSpan"/>
                     </div>
+                    <br/>
                     <div className="form-group">
                         <label>City<b className="text-danger"> *</b></label>
                         <input id="register_city" type="text" className="form-control" placeholder="City" onChange={handleCity}/>
-                        <span className="alert-danger" id="citySpan"></span>
+                        <span className="alert-danger" id="citySpan"/>
                     </div>
+                    <br/>
                     <div className="form-group">
                         <label>Postal Code<b className="text-danger"> *</b></label>
                         <input id="register_postal" type="text" className="form-control" placeholder="Postal code" onChange={handlePostalCode}/>
-                        <span className="alert-danger" id="postalCodeSpan"></span>
+                        <span className="alert-danger" id="postalCodeSpan"/>
                     </div>
+                    <br/>
                     <div className="form-group">
                         <label>Organisation Name</label>
                         <input id="register_org" type="text" className="form-control" placeholder="Organisation name" onChange={handleOrganisationName}/>
-                        <span className="alert-danger" id="organisationSpan"></span>
+                        <span className="alert-danger" id="organisationSpan"/>
                     </div>
                     <br/>
                     <button id="register_btn" type="submit" className="btn btn-primary btn-block">Submit</button>
                 </form>
+                <br/>
+                <br/>
+                <br/>
             </div>
         </div>
     ); }
