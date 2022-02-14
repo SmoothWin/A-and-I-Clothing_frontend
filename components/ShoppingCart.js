@@ -176,12 +176,12 @@ export default function ShoppingCart(props){
         display = 
         <div className="position-fixed d-flex flex-column justify-content-between" style={{right:"0", top:"0", zIndex: 100001,height:"100%",width:"320px", backgroundColor:"#f8f9fa", padding:"0 5px 0 5px", }}>
             <div className="d-flex align-items-center justify-content-end" style={{height:"60px"}}>
-                <button onClick={props.toggleCart}>&#128722;</button>
+                <button id="cart_btn" onClick={props.toggleCart}>&#128722;</button>
             </div>
             <div className="d-flex flex-column justify-content-between" style={{height:"100%"}}>
                 {cartItems}
                 
-                <button onClick={handleCheckout} className="btn btn-success" style={{width:"90%", marginLeft:"auto", marginRight:"auto", marginBottom:"50px"}}>Checkout</button>
+                <button id="checkout_btn" onClick={handleCheckout} className="btn btn-success" style={{width:"90%", marginLeft:"auto", marginRight:"auto", marginBottom:"50px"}}>Checkout</button>
             </div>
         </div>
     }

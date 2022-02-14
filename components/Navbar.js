@@ -101,7 +101,7 @@ export default function Navbar(){
         right = 
         <div className="d-flex align-items-center">
             <span className='nav-item'>{username}</span>
-            <a className='nav-link' role="button" onClick={handleLogout}>Logout</a>
+            <a id="logout_btn" className='nav-link' role="button" onClick={handleLogout}>Logout</a>
         </div>
         
     }else{
@@ -141,7 +141,7 @@ export default function Navbar(){
                     
                 </div>
             <div className='d-flex' style={{marginLeft:"auto"}}>
-                <button onClick={handleShoppingCart} style={{marginRight:"20px"}}>&#128722;</button>
+                <button id="cart_btn" onClick={handleShoppingCart} style={{marginRight:"20px"}}>&#128722;</button>
             </div>
             </nav>
             <ShoppingCart toggleCart={handleShoppingCart} isOn={cartToggle}/>

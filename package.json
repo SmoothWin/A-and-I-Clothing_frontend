@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev-test": "cross-env ENDTEST=true next dev",
     "test": "jest",
     "build": "next build",
     "start": "next start",
@@ -26,11 +27,10 @@
     "@emotion/styled": "^11.6.0",
     "@mui/material": "^5.2.4",
     "@types/jest": "^27.0.3",
+    "cross-env": "^7.0.3",
     "eslint": "8.4.1",
     "eslint-config-next": "12.0.7",
     "jest": "^27.4.4",
-    "jest-puppeteer": "^6.0.2",
-    "puppeteer": "^13.0.0",
     "react-multi-carousel": "^2.6.5"
   }
 }

@@ -173,6 +173,7 @@ export default function Store(){
             }
             localStorage.setItem("cart", JSON.stringify(list))
             await addToCart()
+            plusOneRefs.current[product.id].classList.add(styles.one) 
         }catch(e){
             console.log(e)
         }
