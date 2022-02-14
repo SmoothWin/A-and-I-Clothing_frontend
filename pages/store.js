@@ -118,9 +118,6 @@ export default function Store(){
         data.forEach((x)=>{
             let prodId = x.id
             let selectedSize = Object.entries(x.metadata).filter(x=>x[0].includes("_quantity")&&x[1]>0)[0] || null
-            if(selectedSize === null){
-                document.getElementById("addCart").hidden
-            }
             selectedSizes[prodId]= (selectedSize == null)?null:selectedSize[0]
         })
         setSelectedSize(selectedSizes)
