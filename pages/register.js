@@ -227,7 +227,7 @@ export default function Register() {
         }
     }
     return (
-        <div className={styles.container}>
+        <div>
             <Head>
                 <title>{"Register - A&I Clothing"}</title>
                 <BootstrapJS/>

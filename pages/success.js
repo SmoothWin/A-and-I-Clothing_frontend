@@ -52,7 +52,7 @@ export default function Success(){
         <Navbar/>
         <div className='d-flex mx-2'>
         {
-            (Object.values(sessionObj[0]).length < 1)?<div>No items to display</div>:sessionObj.map((x,k)=>
+            (Object.values(sessionObj[0]).length < 1)?<div style={{fontSize:"1.5rem" ,width:"100%", display:"flex", height:"100px", alignItems:"center", justifyContent:"center"}} >No items to display</div>:sessionObj.map((x,k)=>
             <div key={k} className='mx-2'>
                 <div>{x?.product_name}</div>
                 <img height={100} src={(typeof x.images == "undefined")?null:x?.images[0]}/>

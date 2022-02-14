@@ -85,7 +85,7 @@ export default function Login() {
         setChecked(e.target.checked)
     }
     return (
-        <div className={styles.container}>
+        <div>
             <Head>
             <title>{"Login - A&I Clothing"}</title>
             <BootstrapJS/>

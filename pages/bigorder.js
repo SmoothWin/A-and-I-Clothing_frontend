@@ -48,7 +48,7 @@ export default function Bigorder(){
         }
     }
     return (
-        <div className={styles.container}>
+        <div>
         <Head>
             <title>{"Big Order - A&I Clothing"}</title>
             <BootstrapJS/>

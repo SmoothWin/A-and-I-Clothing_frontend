@@ -19,7 +19,7 @@ export default function Cancel(){
     return (
         <>
         <Navbar/>
-        <p>Checkout has been canceled</p>
+        <p style={{fontSize:"1.5rem" ,width:"100%", display:"flex", height:"100px", alignItems:"center", justifyContent:"center"}}>Checkout has been canceled</p>
         </>
     )
 }
