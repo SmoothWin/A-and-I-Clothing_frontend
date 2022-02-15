@@ -311,7 +311,7 @@ export default function Register() {
                     </div>
                     <br/>
                     <div className="form-group">
-                        <label>Organisation Name</label>
+                        <label>Organization Name</label>
                         <input id="register_org" type="text" className="form-control" placeholder="Organisation name" onChange={handleOrganisationName}/>
                         <span className="alert-danger" id="organisationSpan"/>
                     </div>
