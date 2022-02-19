@@ -27,7 +27,7 @@ export default function Success(){
             try{
             const response = await axios.get(`${url}/checkout/session?id=${id}`, {withCredentials:true, headers:{"csrf-token":localStorage._csrf}})
             const data = await response.data
-            // console.log(data.line_items)
+            console.log(data.line_items)
             localStorage.cart = JSON.stringify({items:[]})
             await addToCart()
 
@@ -50,10 +50,11 @@ export default function Success(){
     return (
         <>
         <Navbar/>
-        <div className='d-flex mx-2'>
+        <div className='d-flex flex-column align-items-center align-items-sm-start flex-sm-row mx-2 justify-content-sm-center'>
         {
-            (Object.values(sessionObj[0]).length < 1)?<div style={{fontSize:"1.5rem" ,width:"100%", display:"flex", height:"100px", alignItems:"center", justifyContent:"center"}} >No items to display</div>:sessionObj.map((x,k)=>
-            <div key={k} className='mx-2'>
+            (Object.values(sessionObj[0]).length < 1)?<div style={{fontSize:"1.5rem" ,width:"100%", display:"flex", height:"100px", alignItems:"center", justifyContent:"center"}} >No items to display</div>
+            :sessionObj.map((x,k)=>
+            <div key={k} className='mx-3 mt-2 mb-2'>
                 <div>{x?.product_name}</div>
                 <img height={100} src={(typeof x.images == "undefined")?null:x?.images[0]}/>
                 <div>{`Total Quantity: ${x?.total_quantity}`}</div>
@@ -67,7 +68,7 @@ export default function Success(){
                     )}
                 </div>
             <div>{`Subtotal: $${returnNumberDecimals(x.subtotal?.toString())}`}</div>
-            <div>{`Total: $${returnNumberDecimals(x.total?.toString())}`}</div>
+            <div>{`Total: $${returnNumberDecimals(x.total?.toString())} `}</div>
             
             </div>
             
