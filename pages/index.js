@@ -13,10 +13,12 @@ export default function Home() {
   
   return (
     <div>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <NextSeo
         title="A&I Clothing"
         description="A clothing as a service company just for you"
-        additionalLinkTags={[{rel:'icon', href="/favicon.ico"}]}
         openGraph={{
           images:[
             {
