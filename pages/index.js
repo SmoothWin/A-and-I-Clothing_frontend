@@ -8,8 +8,10 @@ import styles from '../styles/Home.module.css'
 import Navbar from "../components/Navbar";
 import Link from "next/link";
 
-export default function Home() {
+import {i18next, useTranslation} from "../utilities/internationalization"
 
+export default function Home() {
+  const {t} = useTranslation()
   
   return (
     <div>
@@ -33,37 +35,36 @@ export default function Home() {
   <Navbar/>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a style={{color:"black", fontWeight:"bold", fontFamily:"\"Times New Roman\", Times, serif", textDecorationLine:"underline", textDecorationColor:"red"}}>A & I Clothing</a>
+          {t("home_welcome1")}<a style={{color:"black", fontWeight:"bold", fontFamily:"\"Times New Roman\", Times, serif", textDecorationLine:"underline", textDecorationColor:"red"}}>{t("home_welcome2")}</a>
         </h1>
 
         <p className={styles.description}>
-          A small family-owned business that has only the goal of providing the best quality of clothing they can offer to their client.
-          Going away from nowadays capitalist profit-looking economy, A & I Clothing is trying to offer the best price they can.<br/><br/>
-          Offering clothing solutions for businesses, schools and events off all sizes.<br/>
-          <Link href={`/bigorder`}><a>Contact us</a></Link> to submit your request!<br/><br/>
-          Your needs are our priorities.
+          {t("home_description1")}<br/><br/>
+          {t("home_description2")}<br/>
+          <Link href={`/bigorder`}><a>{t("home_description_link")}</a></Link>{t("home_description3")}<br/><br/>
+          {t("home_description4")}
         </p>
 
         <div className={styles.grid}>
           <a href="https://www.linkedin.com/company/a-i-clothing/" className={styles.card}>
             <h2>LinkedIn &rarr;</h2>
-            <p>Follow our company on the best business network</p>
+            <p>{t("home_socials1")}</p>
           </a>
 
           <a href="https://www.facebook.com/aiclothingsydd" className={styles.card}>
             <h2>Facebook &rarr;</h2>
-            <p>Follow us on the largest social network</p>
+            <p>{t("home_socials2")}</p>
           </a>
 
           <a href="https://www.instagram.com/a_i_clothing/" className={styles.card}>
             <h2>Instagram &rarr;</h2>
-            <p>Follow our journey as a small business</p>
+            <p>{t("home_socials3")}</p>
           </a>
         </div>
       </main>
 
       <footer className={styles.footer}>
-        Copyright © A & I Clothing G.P.
+        {t("copyright")}
       </footer>
     </div>
   )

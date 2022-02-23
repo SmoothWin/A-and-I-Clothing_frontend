@@ -8,9 +8,11 @@ import styles from "../styles/Home.module.css";
 
 //custom imports
 import url from "../config/config"
+import {useTranslation} from "../utilities/internationalization"
 
 
 export default function Login() {
+    const {t} = useTranslation()
     const router = useRouter();
     const [mounted, setMounted] = useState(false)
     const [email,setEmail]=useState(null)
@@ -22,7 +24,6 @@ export default function Login() {
     })
     useEffect(()=>{
         if(mounted){
-            console.log((typeof localStorage.rememberMe == "undefined")?false:localStorage.rememberMe)
             document.getElementById("customCheck1").checked = (typeof localStorage.rememberMe == "undefined")?checked:JSON.parse(localStorage.rememberMe)
         }
     },[mounted])
@@ -30,13 +31,13 @@ export default function Login() {
     function handleEmail(e){
         let input = e.target.value;
         if(input === ""){
-            document.getElementById("emailSpan").innerHTML="Please fill out the email";
+            document.getElementById("emailSpan").innerHTML=t("login_email_error1");
         }
         else if(!input.match(/(?:[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)){
-            document.getElementById("emailSpan").innerHTML="Enter email in the correct form";
+            document.getElementById("emailSpan").innerHTML=t("login_email_error2");
         }
         else if(input.length < 5){
-            document.getElementById("emailSpan").innerHTML="Email has to have more than 4 letters";
+            document.getElementById("emailSpan").innerHTML=t("login_email_error3");
         }
         else{
             document.getElementById("emailSpan").innerHTML="";
@@ -46,10 +47,10 @@ export default function Login() {
     function handlePassword(e){
         let input = e.target.value;
         if(input === ""){
-            document.getElementById("passwordSpan").innerHTML="Please fill out the password";
+            document.getElementById("passwordSpan").innerHTML=t("login_pass_error1");
         }
         else if(!input.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)){
-            document.getElementById("passwordSpan").innerHTML="Password needs to have at least 1 letter, 1 number, 1 special character and be at least 8 characters long";
+            document.getElementById("passwordSpan").innerHTML=t("login_pass_error2");
         }
         else{
             document.getElementById("passwordSpan").innerHTML="";
@@ -61,10 +62,10 @@ export default function Login() {
         try{
         e.preventDefault()
             if(password === null){
-                document.getElementById("submitSpan").innerHTML="Please enter the password"
+                document.getElementById("submitSpan").innerHTML=t("login_submit_error1")
             }
             else if(email === null){
-                document.getElementById("submitSpan").innerHTML="Please enter the email"
+                document.getElementById("submitSpan").innerHTML=t("login_submit_error2");
             }
             else {
                 let response = await axios.post(`${url}/login`, {email: email, password: password, checked: checked}, {withCredentials: true, headers:{"csrf-token":localStorage._csrf}})
@@ -87,7 +88,7 @@ export default function Login() {
     return (
         <div>
             <Head>
-            <title>{"Login - A&I Clothing"}</title>
+            <title>{t("login_title")}</title>
             <BootstrapJS/>
         </Head>
             <Navbar/>
@@ -95,20 +96,20 @@ export default function Login() {
             <br/>
             <div className="container col-lg-4">
             <form onSubmit={onSubmit}>
-                <h3 style={{textAlign: "center"}}>Sign In</h3>
+                <h3 style={{textAlign: "center"}}>{t("login_signin")}</h3>
                 <br/>
                 <span className="alert-danger" id="submitSpan"/>
 
                 <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" onChange={handleEmail}/>
+                    <label>{t("login_email")}</label>
+                    <input type="email" className="form-control" placeholder={t("login_email_placeholder")} onChange={handleEmail}/>
                     <span className="alert-danger" id="emailSpan"/>
                 </div>
                 <br/>
 
                 <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" onChange={handlePassword}/>
+                    <label>{t("login_pass")}</label>
+                    <input type="password" className="form-control" placeholder={t("login_pass_placeholder")} onChange={handlePassword}/>
                     <span className="alert-danger" id="passwordSpan"/>
                 </div>
                 <br/>
@@ -116,12 +117,12 @@ export default function Login() {
                 <div className="form-group">
                     <div className="custom-control custom-checkbox">
                         <input type="checkbox" className="custom-control-input" onClick={handleCheck} id="customCheck1" />
-                        <label className="custom-control-label" htmlFor="customCheck1">&nbsp;Remember me</label>
+                        <label className="custom-control-label" htmlFor="customCheck1">&nbsp;{t("login_remember")}</label>
                     </div>
                 </div>
                 <br/>
 
-                <button type="submit" className="btn btn-primary btn-block">Submit</button>
+                <button type="submit" className="btn btn-primary btn-block">{t("login_submit")}</button>
                 <br/>
             </form>
                 </div>

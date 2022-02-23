@@ -6,12 +6,14 @@ import {loadStripe} from '@stripe/stripe-js';
 
 //custom utility imports
 import {returnNumberDecimals} from "../utilities/transformCurrencyString"
+import {useTranslation} from "../utilities/internationalization"
 import url from "../config/config"
 
 //custom imports
 import {addToCart, getCart} from "../api/cart"
 
 export default function ShoppingCart(props){
+    const {t} = useTranslation()
     const [isMounted, setIsMounted] = useState(false)
     const [items, setItems] = useState([])
     const [loading, setLoading] = useState(false)
@@ -166,7 +168,7 @@ export default function ShoppingCart(props){
                 <div className="d-flex flex-column align-items-center justify-content-around">
                     <span>{x?.name}</span>
                     <div type={"number"}>{x?.quantity}</div>
-                    <button className="btn btn-danger" onClick={()=>removeItem(i)}>Remove</button>
+                    <button className="btn btn-danger" onClick={()=>removeItem(i)}>{t("cart_remove")}</button>
                 </div>
                 </div>)}
             </div>
@@ -181,7 +183,7 @@ export default function ShoppingCart(props){
             <div className="d-flex flex-column justify-content-between" style={{height:"100%"}}>
                 {cartItems}
                 
-                <button id="checkout_btn" onClick={handleCheckout} className="btn btn-success" style={{width:"90%", marginLeft:"auto", marginRight:"auto", marginBottom:"50px"}}>Checkout</button>
+                <button id="checkout_btn" onClick={handleCheckout} className="btn btn-success" style={{width:"90%", marginLeft:"auto", marginRight:"auto", marginBottom:"50px"}}>{t("cart_checkout")}</button>
             </div>
         </div>
     }

@@ -8,6 +8,7 @@ import styles from '../../styles/Home.module.css'
 
 //custom utility imports
 import {returnNumberDecimals} from "../../utilities/transformCurrencyString"
+import {useTranslation} from "../../utilities/internationalization"
 import url from "../../config/config"
 
 //custom api imports
@@ -18,6 +19,7 @@ import BootstrapJS from "../../components/Bootstrap";
 // const productUrl = "https://api.stripe.com/v1/products"
 
 export default function Product(){
+    const {t} = useTranslation()
     const router = useRouter()
     const {productId} = router.query 
     const [isMounted, setIsMounted] = useState(false)
@@ -149,7 +151,7 @@ export default function Product(){
                 {(Object.entries(item.metadata)?.filter(x=>x[0].includes("_quantity") && x[1] > 0).length > 0)
                 ?
                 <div style={{position:"relative"}}>
-                    <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>Add to cart</button>
+                    <button className="btn btn-success" onClick={(e)=>handleItemClick(item)}>{t("specific_prod_add_cart")}</button>
                     <div ref={plusOneRef} className={styles.oneStatic}>+1</div>
                 </div>
                 :
@@ -164,7 +166,7 @@ export default function Product(){
     if(exists === false)
         display = 
         <div>
-            The product doesn&apos;t exist
+            {t("specific_prod_not_exist")}
         </div>
 
     return(

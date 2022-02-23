@@ -7,11 +7,14 @@ import Navbar from '../components/Navbar'
 
 //utility
 import {returnNumberDecimals} from '../utilities/transformCurrencyString'
+import {useTranslation} from "../utilities/internationalization"
 import url from "../config/config"
 
 import {addToCart} from "../api/cart"
+import Head from 'next/head'
 
 export default function Success(){
+    const {t} = useTranslation()
     const router = useRouter()
     const {id} = router.query
     const [mounted, setMounted] = useState(false)
@@ -49,6 +52,9 @@ export default function Success(){
 
     return (
         <>
+        <Head>
+            <title>{t("success_title")}</title>
+        </Head>
         <Navbar/>
         <div className='d-flex flex-column align-items-center align-items-sm-start flex-sm-row mx-2 justify-content-sm-center'>
         {
@@ -57,7 +63,7 @@ export default function Success(){
             <div key={k} className='mx-3 mt-2 mb-2'>
                 <div>{x?.product_name}</div>
                 <img height={100} src={(typeof x.images == "undefined")?null:x?.images[0]}/>
-                <div>{`Total Quantity: ${x?.total_quantity}`}</div>
+                <div>{`${t("success_ttl_qty")} ${x?.total_quantity}`}</div>
                 <div className='d-flex'>
                     
                     
@@ -67,8 +73,8 @@ export default function Success(){
                         </div>
                     )}
                 </div>
-            <div>{`Subtotal: $${returnNumberDecimals(x.subtotal?.toString())}`}</div>
-            <div>{`Total: $${returnNumberDecimals(x.total?.toString())} `}</div>
+            <div>{`${t("success_subtotal")} $${returnNumberDecimals(x.subtotal?.toString())}`}</div>
+            <div>{`${t("success_total")} $${returnNumberDecimals(x.total?.toString())} `}</div>
             
             </div>
             

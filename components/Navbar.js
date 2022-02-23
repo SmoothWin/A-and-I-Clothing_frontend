@@ -10,7 +10,10 @@ import Spinner from "../components/Spinner"
 import ShoppingCart from './ShoppingCart'
 import url from "../config/config"
 
+import {useTranslation} from "../utilities/internationalization"
+
 export default function Navbar(){
+    const {t} = useTranslation()
     const router = useRouter()
     const [isMounted, setIsMounted] = useState(false)
     const [username, setUsername] = useState(null)
@@ -101,14 +104,14 @@ export default function Navbar(){
         right = 
         <div className="d-flex align-items-center">
             <span className='nav-item'>{username}</span>
-            <a id="logout_btn" className='nav-link' role="button" onClick={handleLogout}>Logout</a>
+            <a id="logout_btn" className='nav-link' role="button" onClick={handleLogout}>{t("nav_logout")}</a>
         </div>
         
     }else{
         right= 
         <div className="d-flex">
-            <Link href="/register"><a className="nav-link">Register</a></Link>
-            <Link href="/login"><a className="nav-link">Login</a></Link>
+            <Link href="/register"><a className="nav-link">{t("nav_register")}</a></Link>
+            <Link href="/login"><a className="nav-link">{t("nav_login")}</a></Link>
         </div>
     }
 
@@ -128,10 +131,10 @@ export default function Navbar(){
                     <div className="collapse navbar-collapse" id="mynavbar">
                         <ul className="navbar-nav me-auto">
                             <li className="nav-item">
-                                <Link href="/bigorder"><a className="nav-link">Big Order</a></Link>
+                                <Link href="/bigorder"><a className="nav-link">{t("nav_bigorder")}</a></Link>
                             </li>
                             <li className="nav-item">
-                                <Link href="/store"><a className="nav-link">Store</a></Link>
+                                <Link href="/store"><a className="nav-link">{t("nav_store")}</a></Link>
                             </li>
                         </ul>
                         

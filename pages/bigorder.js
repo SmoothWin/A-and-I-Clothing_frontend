@@ -8,8 +8,10 @@ import styles from "../styles/Home.module.css";
 
 //custom imports
 import url from "../config/config"
+import {useTranslation} from "../utilities/internationalization"
 
 export default function Bigorder(){
+    const {t} = useTranslation()
     const router = useRouter();
     const [selectedFile, setSelectedFile] = useState(null);
     const [message, setMessage] = useState(null);
@@ -50,7 +52,7 @@ export default function Bigorder(){
     return (
         <div>
         <Head>
-            <title>{"Big Order - A&I Clothing"}</title>
+            <title>{t("bigorder_title")}</title>
             <BootstrapJS/>
         </Head>
         <Navbar/>
@@ -59,27 +61,27 @@ export default function Bigorder(){
             <div className="container-sm">
         <div className="d-flex flex-column flex-md-row">
             <div className="col-12 col-md-6 mx-1">
-                <h2 className="display-4 col-10 mx-6 text-sm-start">Business Orders</h2>
+                <h2 className="display-4 col-10 mx-6 text-sm-start">{t("bigorder_h2")}</h2>
                 <br/>
                 <br/>
-                <p className="text-secondary pt-3 fs-5">Steps for orders:</p>
-                <p className="text-secondary pt-4 fs-5">1- Download the form and fill it out.</p>
-                <p className="text-secondary pt-4 fs-5">2- Upload the form below and click Send Order.</p>
-                <p className="text-secondary pt-4 fs-5">3- A business associate will contact you ASAP to give you a quote.</p>
-                <p className="text-secondary pt-4 fs-5">4- Once everything is in order, we will prepare your order and bring it to you!</p>
+                <p className="text-secondary pt-3 fs-5">{t("bigorder_order_title")}</p>
+                <p className="text-secondary pt-4 fs-5">{t("bigorder_step1")}</p>
+                <p className="text-secondary pt-4 fs-5">{t("bigorder_step2")}</p>
+                <p className="text-secondary pt-4 fs-5">{t("bigorder_step3")}</p>
+                <p className="text-secondary pt-4 fs-5">{t("bigorder_step4")}</p>
                 
             </div>
                 <img className="img-thumbnail h-25 w-50 mt-auto mb-auto mx-auto" src="/image.png"/>
         </div>
                     
         <div className="d-flex flex-column">
-            <a className="col-12 mt-3 btn btn-danger btn-lg" href="/bigorder_template.csv" download> Download Form</a>
+            <a className="col-12 mt-3 btn btn-danger btn-lg" href="/bigorder_template.csv" download>{t("bigorder_download")}</a>
             <div className="col-12 mt-3 form-group">
                 <input className="form-control" id="file_form" type="file" accept=".csv"
                 onChange={onChangeHandler}
                 />
             </div>
-            <button type="button" className="col-12 mt-3 btn btn-danger btn-lg" onClick={onClickHandler}>Send Order</button>
+            <button type="button" className="col-12 mt-3 btn btn-danger btn-lg" onClick={onClickHandler}>{t("bigorder_send")}</button>
         </div>
 
         <div className="mx-auto mt-3 text-center text-success">{message}</div>

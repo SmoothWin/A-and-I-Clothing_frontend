@@ -8,6 +8,7 @@ import styles from '../styles/Home.module.css'
 import url from "../config/config"
 //custom utility imports
 import {returnNumberDecimals} from "../utilities/transformCurrencyString"
+import {useTranslation} from "../utilities/internationalization"
 
 //custom api imports
 import { addToCart, getCart } from "../api/cart";
@@ -20,6 +21,7 @@ import BootstrapJS from "../components/Bootstrap";
 const productUrl = `${url}/v1/products`
 
 export default function Store(){
+    const {t} = useTranslation()
     const [isMounted, setIsMounted] = useState(false)
     const [data, setData] = useState([])
     const [selectedSize, setSelectedSize] = useState({})
@@ -190,12 +192,12 @@ export default function Store(){
     return(
         <>
             <Head>
-                <title>{"Store - A&I Clothing"}</title>
+                <title>{t("store_title")}</title>
                 <BootstrapJS/>
             </Head>
         <Navbar/>
             <br/>
-            <h2 className="display-4 col-10 mx-6 text-sm-start"><b>&nbsp;&nbsp;&nbsp;Store</b></h2>
+            <h2 className="display-4 col-10 mx-6 text-sm-start"><b>&nbsp;&nbsp;&nbsp;{t("store_h2")}</b></h2>
             <br/>
             <br/>
             <br/>
@@ -212,13 +214,13 @@ export default function Store(){
                 {(Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).length > 0 )?
                 <select onChange={(e)=>handleItemSelection(e,product)}>
                     {Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).map(x=><option value={x[0]} key={x[0]}>{x[0].replace("_quantity","")}</option>)}
-                </select>: <span>Item out of Stock</span>}
+                </select>: <span>{t("store_out_stock")}</span>}
             
         
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 {(Object.entries(product.metadata).filter(x=>x[0].includes("_quantity") && x[1] > 0).length > 0 )?
                     <div style={{position:"relative"}}>
-                        <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>Add to cart</button>
+                        <button className="btn btn-success" onClick={(e)=>handleItemClick(product)}>{t("store_add_cart")}</button>
                         <div ref={(el)=>addToRefs(el,product.id)} className={styles.oneStatic}>+1</div>
                     </div>
                     :null}
