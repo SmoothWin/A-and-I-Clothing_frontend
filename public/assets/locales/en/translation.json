@@ -37,6 +37,9 @@
 
     "login_pass_error1":"Please fill out the password",
     "login_pass_error2":"Password needs to have at least 1 letter, 1 number, 1 special character and be at least 8 characters long",
+    "login_pass_error3":"Too many login attempts were made.\nPlease try again Later.",
+    "login_pass_error4":"Something went wrong with the login process",
+
 
     "login_remember":"Remember me",
     "login_submit":"Submit",

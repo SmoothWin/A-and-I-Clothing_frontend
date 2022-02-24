@@ -75,10 +75,10 @@ export default function Login() {
                 router.push("/")
             }
         }catch(e){
-            if(e.response?.status == 429){
-                document.getElementById("submitSpan").innerHTML="Too many login attempts were made.\nPlease try again Later."
+            if(e.response?.status == 429 && typeof e.response != "undefined"){
+                document.getElementById("submitSpan").innerHTML=t("login_submit_error3")
             }else{
-                document.getElementById("submitSpan").innerHTML="Something went wrong with the login process"
+                document.getElementById("submitSpan").innerHTML=t("login_submit_error4")
             }
         }
     }
