@@ -1,0 +1,127 @@
+{
+    "nav_bigorder":"Big Order",
+    "nav_store":"Store",
+    "nav_register":"Register",
+    "nav_login":"Login",
+    "nav_logout":"Logout",
+
+    "cart_remove":"Remove",
+    "cart_checkout":"Checkout",
+
+    "home_welcome1":"Welcome to ",
+    "home_welcome2":"A & I Clothing",
+    "home_description1":"A small family-owned business that has only the goal of providing the best quality of clothing they can offer to their client. Going away from nowadays capitalist profit-looking economy, A & I Clothing is trying to offer the best price they can.",
+    "home_description2":"Offering clothing solutions for businesses, schools and events off all sizes.",
+    "home_description_link":"Contact us",
+    "home_description3":" to submit your request!",
+    "home_description4":"Your needs are our priorities.",
+
+    "home_socials1":"Follow our company on the best business network",
+    "home_socials2":"Follow us on the largest social network",
+    "home_socials3":"FFollow our journey as a small business",
+
+    "copyright":"Copyright © A & I Clothing G.P.",
+
+    "login_title":"Login - A&I Clothing",
+    "login_signin":"Sign In",
+
+    "login_email":"Email address",
+    "login_email_placeholder":"Enter email",
+
+    "login_email_error1":"Please fill out the email",
+    "login_email_error2":"Enter email in the correct form",
+    "login_email_error3":"Email has to have more than 4 letters",
+
+    "login_pass":"Password",
+    "login_pass_placeholder":"Enter password",
+
+    "login_pass_error1":"Please fill out the password",
+    "login_pass_error2":"Password needs to have at least 1 letter, 1 number, 1 special character and be at least 8 characters long",
+
+    "login_remember":"Remember me",
+    "login_submit":"Submit",
+
+    "login_submit_error1":"Too many login attempts were made.\nPlease try again Later.",
+    "login_submit_error2":"Something went wrong with the login process",
+
+    "register_title":"Register - A&I Clothing",
+    "register_h3":"Register",
+    "register_fn":"First name",
+    "register_fn_error1":"Please fill out the first name",
+    "register_fn_error2":"Enter only letters",
+    "register_fn_error3":"First name has to have more than 2 letters",
+    
+    "register_ln":"Last name",
+    "register_ln_error1":"Please fill out the last name",
+    "register_ln_error2":"Enter only letters",
+    "register_ln_error3":"Last name has to have more than 2 letters",
+
+    "register_email":"Email address",
+    "register_email_placeholder":"Enter email",
+    "register_email_error1":"Please fill out the email",
+    "register_email_error2":"Email has to have more than 4 letters",
+    "register_email_error3":"Enter email in the correct form",
+
+    "register_pass":"Password",
+    "register_pass_placeholder":"Enter password",
+    "register_pass_error1":"Please fill out the password",
+    "register_pass_error2":"Password needs to have at least 1 letter, 1 number, 1 special character and be at least 8 characters long",
+
+    "register_cpass":"Confirm Password",
+    "register_cpass_error1":"Password has to match",
+
+    "register_phone":"Phone Number",
+    "register_phone_placeholder":"Enter phone number",
+    "register_phone_error1":"Please select a country",
+    "register_phone_error2":"Please fill out the phone number",
+    "register_phone_error3":"Phone number has to have 10 numbers",
+
+    "register_address":"Address",
+    "register_address_error1":"Please fill out the address",
+    "register_address_error2":"Address needs to contain building number, road type and road name",
+
+    "register_apartment":"Apartment Number",
+    "register_apartment_error1":"Apartment should be only numbers",
+
+    "register_city":"City",
+    "register_city_error1":"Please fill out the city name",
+    "register_city_error2":"City name must not contain any numbers",
+
+    "register_postal":"Postal Code",
+    "register_postal_error1":"Please fill out the postal code",
+    "register_postal_error2":"Postal Code must have at least 5 characters",
+
+    "register_org":"Organization Name",
+    "register_org_error1":"Organisation name must have at least 3 characters",
+
+    "register_submit":"Submit",
+    "register_submit_error":"Please fill out the missing fields",
+
+
+    "bigorder_title":"Big Order - A&I Clothing",
+    "bigorder_h2":"Business Order",
+    "bigorder_order_title":"Steps for orders:",
+    "bigorder_step1":"1- Download the form and fill it out.",
+    "bigorder_step2":"2- Upload the form below and click Send Order.",
+    "bigorder_step3":"3- A business associate will contact you ASAP to give you a quote.",
+    "bigorder_step4":"4- Once everything is in order, we will prepare your order and bring it to you!",
+
+    "bigorder_download":"Download Form",
+    "bigorder_send":"Send Order",
+
+    "store_title":"Store - A&I Clothing",
+    "store_h2":"Store",
+    "store_out_stock":"Item out of Stock",
+    "store_add_cart":"Add to cart",
+
+    "success_title":"Success - A&I Clothing",
+    "success_ttl_qty":"Total Quantity:",
+    "success_subtotal":"Subtotal:",
+    "success_total":"Total:",
+
+    "canceled_title":"Canceled - A&I Clothing",
+    "canceled_cancel":"Checkout has been canceled",
+
+    "specific_prod_add_cart":"Add to cart",
+    "specific_prod_not_exist":"The product doesn't exist"
+}

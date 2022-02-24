@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
 
 //custom imports
 import BootstrapJS from './Bootstrap'
@@ -10,7 +11,7 @@ import Spinner from "../components/Spinner"
 import ShoppingCart from './ShoppingCart'
 import url from "../config/config"
 
-import {useTranslation} from "../utilities/internationalization"
+import {useTranslation, i18next} from "../utilities/internationalization"
 
 export default function Navbar(){
     const {t} = useTranslation()
@@ -135,6 +136,9 @@ export default function Navbar(){
                             </li>
                             <li className="nav-item">
                                 <Link href="/store"><a className="nav-link">{t("nav_store")}</a></Link>
+                            </li>
+                            <li>
+                                <button className='btn btn-danger text-white rounded-pill mx-2' onClick={()=>{i18next.changeLanguage(Cookies.get("i18next") == "en"?"fr":"en")}}>{Cookies.get("i18next") == "en"?"FR":"EN"}</button>
                             </li>
                         </ul>
                         
