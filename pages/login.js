@@ -76,9 +76,9 @@ export default function Login() {
             }
         }catch(e){
             if(e.response?.status == 429 && typeof e.response != "undefined"){
-                document.getElementById("submitSpan").innerHTML=t("login_submit_error3")
+                document.getElementById("submitSpan").innerHTML=t("login_pass_error3")
             }else{
-                document.getElementById("submitSpan").innerHTML=t("login_submit_error4")
+                document.getElementById("submitSpan").innerHTML=t("login_pass_error4")
             }
         }
     }
