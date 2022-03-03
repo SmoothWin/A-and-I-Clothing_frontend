@@ -23,7 +23,8 @@ export default function ShoppingCart(props){
       };
     useEffect(()=>{
         setIsMounted(true)
-    })
+        console.log(url)
+    },[])
     async function getItems(){
         try{
             await getCart()
