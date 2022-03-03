@@ -22,6 +22,7 @@ export default function Home() {
         title="A&I Clothing"
         description="A clothing as a service company just for you"
         openGraph={{
+          title:"A&I Clothing",
           images:[
             {
               url:"/image.png",
